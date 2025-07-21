@@ -8,7 +8,7 @@ techniques. These files should:
 2. Learn from your datasets using methods that are appropriate to your research
    question, dataset and team's constraints.
 
-**DO NOT modify an existing dataset in `0_datasets`!** This is critical to open
+**DO NOT modify an existing dataset in `0_datasets`!** This i s critical to open
 research: Someone should be able to clone this repository and run your scripts
 to replicate your research. If you modify an original dataset, others cannot
 replicate your work.
