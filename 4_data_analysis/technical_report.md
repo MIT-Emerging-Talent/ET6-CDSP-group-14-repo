@@ -5,11 +5,13 @@
 ### Dataset and Preprocessing
 
 **Dataset**: Enron Email Dataset (29,767 emails)
+
 - **Safe emails**: 15,791 (53.05%)
 - **Phishing emails**: 13,976 (46.95%)
 - **Features extracted**: 22 linguistic and psychological features
 
 **Preprocessing Pipeline**:
+
 1. **Text cleaning**: Removed Enron-specific artifacts, stop words, email headers, and corporate signatures
 2. **Feature extraction**: Applied NLP techniques for sentiment analysis, readability metrics, and psychological profiling
 3. **Statistical analysis**: Used effect size calculations (Cohen's d) to measure feature importance
@@ -18,6 +20,7 @@
 ### Feature Engineering Strategy
 
 #### Linguistic Features
+
 - **Text complexity metrics**: Type-token ratio (vocabulary diversity), average word length, sentence length
 - **Readability scores**: Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index
 - **Punctuation analysis**: Exclamation ratio, question ratio, punctuation density
@@ -25,6 +28,7 @@
 **Rationale**: Linguistic features capture the writing style and complexity patterns that distinguish phishing from legitimate emails. Type-token ratio measures vocabulary diversity, which may indicate attempts to appear sophisticated or include technical jargon.
 
 #### Psychological Features
+
 - **Sentiment analysis**: Positive, negative, neutral, and compound sentiment scores using VADER
 - **Manipulation tactics**: Urgency words, action words, financial terms, fear words, reward words
 - **Structural patterns**: URL count, email pattern frequency
@@ -32,7 +36,9 @@
 **Rationale**: Psychological features directly target the manipulation tactics used by phishers. These features are based on established psychological principles of persuasion and social engineering techniques.
 
 #### Statistical Significance Testing
+
 Used Cohen's d effect size to quantify feature importance:
+
 - **Large effect** (|d| > 0.8): sentiment_neg, sentiment_neu
 - **Medium effect** (0.5 < |d| < 0.8): type_token_ratio, exclamation_ratio, avg_word_length
 - **Small effect** (0.2 < |d| < 0.5): financial_words, reward_words, url_count
@@ -44,17 +50,23 @@ Used Cohen's d effect size to quantify feature importance:
 ### 1. Sentiment Analysis Results
 
 **Most Discriminative Features**:
+
 - **Negative sentiment**: d = 0.502 (phishing emails 85% higher)
 - **Neutral sentiment**: d = -0.486 (phishing emails 5% lower)
 - **Positive sentiment**: d = 0.228 (phishing emails 17% higher)
 
-**Technical Interpretation**: Phishing emails exhibit higher emotional volatility, using both negative pressure and positive rewards to manipulate recipients. The negative sentiment effect (d = 0.502) is particularly strong, indicating that fear-based manipulation is a dominant strategy. The reduction in neutral sentiment (d = -0.486) suggests phishers avoid balanced, professional language in favor of emotionally charged content.
+**Technical Interpretation**: Phishing emails exhibit higher emotional volatility, using both
+negative pressure and positive rewards to manipulate recipients. The negative sentiment effect
+(d = 0.502) is particularly strong, indicating that fear-based manipulation is a dominant
+strategy. The reduction in neutral sentiment (d = -0.486) suggests phishers avoid balanced,
+professional language in favor of emotionally charged content.
 
 **Statistical Context**: These effect sizes are considered medium to large in social science research, indicating that sentiment differences between phishing and legitimate emails are not just statistically significant but practically meaningful.
 
 ### 2. Psychological Manipulation Patterns
 
 **Effect Sizes by Manipulation Type**:
+
 - Financial pressure: d = 0.316 (93% increase in financial terms)
 - Reward promises: d = 0.305 (61% increase in reward words)
 - Action demands: d = 0.197 (22% increase in action words)

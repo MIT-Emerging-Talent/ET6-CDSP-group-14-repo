@@ -6,6 +6,7 @@ Comprehensive analysis of phishing vs safe emails using the Enron dataset.
 This script performs comparative analysis to uncover patterns and language tactics used by phishers.
 """
 
+import os
 import re
 import string
 import warnings
@@ -225,7 +226,7 @@ class PhishingAnalyzer:
                 flesch_score = flesch_reading_ease(text)
                 flesch_grade = flesch_kincaid_grade(text)
                 fog_index = gunning_fog(text)
-            except:
+            except Exception:
                 flesch_score = flesch_grade = fog_index = 0
 
             return {
@@ -517,8 +518,6 @@ class PhishingAnalyzer:
         print("Creating individual visualization plots...")
 
         # Create plots directory
-        import os
-
         os.makedirs("plots", exist_ok=True)
 
         # Set up the plotting style
@@ -1484,8 +1483,6 @@ class PhishingAnalyzer:
         print("Saving analysis results...")
 
         # Create plots directory
-        import os
-
         os.makedirs("plots", exist_ok=True)
 
         # Save cleaned dataset with all features

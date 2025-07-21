@@ -17,7 +17,7 @@ Our analysis approach combines statistical analysis with machine learning to und
 
 ### Main Analysis Script
 
-**phishing_analysis.py**
+#### phishing_analysis.py
 
 - Core analysis implementation
 - Feature extraction and statistical analysis
@@ -26,14 +26,14 @@ Our analysis approach combines statistical analysis with machine learning to und
 
 ### Reports
 
-**technical_report.md**
+#### technical_report.md
 
 - Detailed technical methodology and findings
 - Statistical results with effect sizes
 - Machine learning performance metrics
 - Technical interpretation of results
 
-**non_technical_report.md**
+#### non_technical_report.md
 
 - Executive summary for general audiences
 - Key findings explained in accessible language
@@ -42,7 +42,7 @@ Our analysis approach combines statistical analysis with machine learning to und
 
 ### Results and Outputs
 
-**plots/** folder contains:
+#### plots/ folder contents
 
 - `01_dataset_overview.png` - Dataset composition and balance
 - `02_sentiment_analysis.png` - Sentiment differences between email types
@@ -55,7 +55,7 @@ Our analysis approach combines statistical analysis with machine learning to und
 - `09_url_email_patterns.png` - Structural pattern analysis
 - `10_enhanced_boxplot_comparison.png` - Comprehensive feature comparison
 
-**Analysis Result Files**:
+#### Analysis Result Files
 
 - `feature_comparison_stats.csv` - Statistical comparison of all features
 - `top_phishing_terms.csv` - Most characteristic phishing words
@@ -63,7 +63,7 @@ Our analysis approach combines statistical analysis with machine learning to und
 
 ### Dependencies
 
-**requirements.txt**
+#### requirements.txt
 
 - Python packages required for analysis
 - Includes pandas, scikit-learn, matplotlib, seaborn, nltk, etc.

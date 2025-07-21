@@ -2,13 +2,17 @@
 
 ## Executive Summary
 
-We analyzed nearly 30,000 emails to understand how to spot phishing attempts. Our analysis found clear patterns that distinguish dangerous phishing emails from legitimate business communications. The most important finding is that **phishing emails use specific psychological tactics and language patterns**. We further create a model that can detect phishing emails with about 84% accuracy.
+We analyzed nearly 30,000 emails to understand how to spot phishing attempts. Our analysis found
+clear patterns that distinguish dangerous phishing emails from legitimate business communications.
+The most important finding is that **phishing emails use specific psychological tactics and
+language patterns**. We further create a model that can detect phishing emails with about 84% accuracy.
 
 ## Key Findings
 
 ### 1. Phishing Emails Are More Emotional and Urgent
 
 Phishing emails use significantly more negative emotional language and create urgency. They contain:
+
 - **3.5 times more exclamation marks** than legitimate emails
 - **Nearly twice as many negative sentiment words**
 - **More urgent language** like "act now" and "limited time"
@@ -22,18 +26,23 @@ Phishing emails use significantly more negative emotional language and create ur
 ### 2. Phishing Emails Use Psychological Manipulation
 
 Phishing emails employ specific psychological tactics:
+
 - **Financial pressure**: 57% more financial terms (money, account, payment)
 - **Reward promises**: 36% more reward words (free, bonus, win)
 - **Action demands**: 22% more action words (click, verify, confirm)
 - **Urgency creation**: 12% more urgent language
 
-**Why This Matters**: Phishers use proven psychological principles to manipulate behavior. Financial pressure creates fear of loss, reward promises trigger greed, action demands reduce thinking time, and urgency prevents careful consideration. These tactics work because they target fundamental human psychology - the desire to avoid loss and gain rewards quickly.
+**Why This Matters**: Phishers use proven psychological principles to manipulate behavior.
+Financial pressure creates fear of loss, reward promises trigger greed, action demands reduce
+thinking time, and urgency prevents careful consideration. These tactics work because they target
+fundamental human psychology - the desire to avoid loss and gain rewards quickly.
 
 ![Psychological Tactics](plots/03_psychological_radar.png)
 
 ### 3. Language Complexity Reveals Intent
 
 Phishing emails have distinctive writing patterns:
+
 - **More complex vocabulary** (higher type-token ratio)
 - **Longer average words** (4.3 vs 4.0 characters)
 - **More URLs and web links** (2.7 times more)
@@ -42,6 +51,7 @@ Phishing emails have distinctive writing patterns:
 **Why This Matters**: These patterns reveal the phisher's strategy. More complex vocabulary and longer words might be used to appear more sophisticated or to include technical terms that sound legitimate. The high number of URLs is directly related to the phishing goal - getting victims to click malicious links.
 
 **What These Patterns Tell Us**:
+
 - **Complex vocabulary**: Phishers may use technical jargon to appear authoritative or to include specific terms that trigger responses
 - **Longer words**: Could indicate the use of formal language to seem more professional, or the inclusion of technical terms
 - **More URLs**: Directly related to the phishing objective - every URL is a potential trap
@@ -53,6 +63,7 @@ Phishing emails have distinctive writing patterns:
 ### 4. Most Dangerous Words in Phishing Emails
 
 The top terms that signal phishing attempts:
+
 1. **http/www** - Web links
 2. **click** - Action demands
 3. **save** - Urgency
@@ -75,6 +86,7 @@ We have moderate to high confidence levels in our analysis comparing phishing em
 **Statistical Strength**: We analyzed nearly 30,000 emails, which is a large enough sample to detect even small differences reliably. The patterns we found are consistent and statistically significant.
 
 **Effect Sizes**: The differences we found using Cohen's d levels are not just statistically significant but practically meaningful:
+
 - **Large effects** (very confident): Negative sentiment, neutral sentiment
 - **Medium effects** (highly confident): Vocabulary complexity, exclamation usage, word length
 - **Small effects** (moderately confident): Financial terms, reward words, URL frequency
@@ -83,7 +95,7 @@ We have moderate to high confidence levels in our analysis comparing phishing em
 
 **Model Performance**: Our detection model achieved 84% accuracy, which provides additional validation that these patterns are real and useful for identification.
 
-### Sources of Error and Uncertainty:
+### Sources of Error and Uncertainty
 
 1. **Dataset Limitations**: We analyzed emails from the early 2000s (Enron dataset). Modern phishing tactics may have evolved significantly since then. Phishers now use more sophisticated techniques, including AI-generated content, better grammar, and more convincing pretexts.
 
@@ -93,15 +105,16 @@ We have moderate to high confidence levels in our analysis comparing phishing em
 
 4. **Evolving Tactics**: Phishers constantly adapt their methods, so some newer tactics might not be captured. They study detection methods and adjust their approaches accordingly, making it a constant arms race.
 
-
-### How to Apply These Findings:
+### How to Apply These Findings
 
 **High Confidence Patterns** (very reliable indicators):
+
 - Excessive negative language and emotional urgency
 - Unusually high exclamation mark usage
 - Significant vocabulary complexity differences
 
 **Medium Confidence Patterns** (good indicators, but consider context):
+
 - Financial pressure and reward promises
 - Action demands and urgency creation
 - URL frequency and punctuation patterns
@@ -109,15 +122,19 @@ We have moderate to high confidence levels in our analysis comparing phishing em
 ## Visual Evidence
 
 ### Dataset Overview
+
 ![Dataset Overview](plots/01_dataset_overview.png)
 
 ### Punctuation Patterns
+
 ![Punctuation Analysis](plots/05_punctuation_analysis.png)
 
 ### Feature Importance
+
 ![Feature Importance](plots/07_feature_importance.png)
 
 ### URL and Email Patterns
+
 ![URL Patterns](plots/09_url_email_patterns.png)
 
 ## Conclusion
