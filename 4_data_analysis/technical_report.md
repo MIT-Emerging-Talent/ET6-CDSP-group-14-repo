@@ -79,6 +79,7 @@ professional language in favor of emotionally charged content.
 ### 3. Linguistic Complexity Analysis
 
 **Vocabulary Diversity**:
+
 - Type-token ratio: d = 0.372 (11% higher in phishing)
 - Average word length: d = 0.324 (7% longer words in phishing)
 - URL frequency: d = 0.273 (175% more URLs in phishing)
@@ -92,12 +93,14 @@ professional language in favor of emotionally charged content.
 ### 4. Machine Learning Performance
 
 **Model**: Random Forest Classifier
+
 - **Overall Accuracy**: 83.5%
 - **Precision**: 86.4% (phishing detection)
 - **Recall**: 77.1% (phishing detection)
 - **F1-Score**: 81.5%
 
 **Feature Importance Ranking**:
+
 1. Exclamation ratio (0.245)
 2. URL count (0.139)
 3. Type-token ratio (0.133)
@@ -118,7 +121,7 @@ professional language in favor of emotionally charged content.
 
 1. **Sample Size Adequacy**: N = 29,767 emails provides sufficient statistical power to detect even small effects (Cohen's d > 0.1) with 95% confidence.
 
-2. **Effect Size Magnitude**: 
+2. **Effect Size Magnitude**:
    - **Large effects** (d > 0.5): sentiment_neg (0.502), sentiment_neu (-0.486) - Very high confidence
    - **Medium effects** (0.3 < d < 0.5): type_token_ratio (0.372), exclamation_ratio (0.364), avg_word_length (0.324) - High confidence
    - **Small effects** (0.2 < d < 0.3): financial_words (0.316), reward_words (0.305), url_count (0.273) - Moderate confidence
@@ -137,41 +140,45 @@ professional language in favor of emotionally charged content.
 ### 1. Dataset Limitations
 
 **Temporal Bias**: Enron dataset (2000-2002) may not reflect modern phishing tactics
+
 - **Impact**: Reduced generalizability to contemporary threats. Modern phishers use AI-generated content, better grammar, and more sophisticated pretexts
 - **Validation Need**: Results should be validated on contemporary datasets
 
 **Domain Specificity**: Corporate email context may not generalize to personal emails
+
 - **Impact**: False positives in non-corporate contexts. Personal emails may have different linguistic patterns
 - **Future Work**: Test on diverse email datasets including personal, academic, and government communications
 
 ### 2. Feature Engineering Assumptions
 
 **Sentiment Analysis Limitations**:
+
 - VADER sentiment analyzer may not capture domain-specific sentiment or technical terminology
 - Cultural and contextual nuances may be missed, leading to misclassification
 - Domain adaptation needed for financial, technical, or industry-specific language
 
 **Psychological Feature Definitions**:
-- Manual curation of manipulation word lists may be incomplete or biased
 
+- Manual curation of manipulation word lists may be incomplete or biased
 - Static lists don't adapt to evolving tactics or new manipulation strategies
 - Need for dynamic, context-aware feature extraction
 
 ### 3. Statistical Analysis Concerns
 
 **Effect Size Interpretation**:
+
 - Cohen's d assumes normal distribution (may not hold for all features, especially count-based features)
 - Effect size thresholds are guidelines and may not be appropriate for all contexts
-
 
 ## Conclusion
 
 The analysis demonstrates that linguistic and psychological features can effectively distinguish phishing emails with 83.5% accuracy. The most discriminative features are sentiment patterns, psychological manipulation tactics, and linguistic complexity measures. However, the approach has limitations related to dataset age, domain specificity, and feature engineering assumptions.
 
 **Key Technical Insights**:
+
 1. Sentiment analysis provides the strongest discriminative power
 2. Psychological manipulation features show consistent patterns
 3. Linguistic complexity features add complementary information
 4. URL and punctuation patterns serve as reliable indicators
 
-**Future Work**: Implement ensemble methods, incorporate temporal analysis, and test on contemporary datasets to improve generalizability and performance. 
+**Future Work**: Implement ensemble methods, incorporate temporal analysis, and test on contemporary datasets to improve generalizability and performance.
