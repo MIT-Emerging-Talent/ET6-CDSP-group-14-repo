@@ -1680,5 +1680,5 @@ class PhishingAnalyzer:
 
 if __name__ == "__main__":
     # Initialize and run analysis
-    analyzer = PhishingAnalyzer("../1_datasets/Enron.csv")
+    analyzer = PhishingAnalyzer("1_datasets/Enron.csv")
     analyzer.run_complete_analysis()
