@@ -353,4 +353,6 @@ Outstanding contributors may be invited to:
 
 ---
 
-**Thank you for contributing to better understanding of phishing detection through linguistic analysis! 🛡️**
+## Thank You
+
+Thank you for contributing to better understanding of phishing detection through linguistic analysis! 🛡️
