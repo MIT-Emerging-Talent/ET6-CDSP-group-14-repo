@@ -1,11 +1,11 @@
 # 🛡️ Phishing Email Linguistic Analysis Project
 
-**A Linguistic Analysis of Phishing vs Legitimate Emails: Identifying Common Patterns and Language Tactics**
+## A Linguistic Analysis of Phishing vs Legitimate Emails: Identifying Common Patterns and Language Tactics
 
-[![Project Status](https://img.shields.io/badge/Status-Complete-success)]()
-[![Dataset](https://img.shields.io/badge/Dataset-Enron_Emails-blue)]()
-[![Language](https://img.shields.io/badge/Language-Python-yellow)]()
-[![Accuracy](https://img.shields.io/badge/ML_Accuracy-84%25-brightgreen)]()
+[![Project Status](https://img.shields.io/badge/Status-Complete-success)](https://github.com/MIT-Emerging-Talent/ET6-CDSP-group-14-repo)
+[![Dataset](https://img.shields.io/badge/Dataset-Enron_Emails-blue)](./1_datasets/)
+[![Language](https://img.shields.io/badge/Language-Python-yellow)](https://www.python.org/)
+[![Accuracy](https://img.shields.io/badge/ML_Accuracy-84%25-brightgreen)](./4_data_analysis/)
 
 ---
 
@@ -214,7 +214,7 @@ python 4_data_analysis/phishing_analysis.py
 
 If you use this research or methodology in your work, please cite:
 
-```
+```bibtex
 The Pandas Pact (2025). A Linguistic Analysis of Phishing vs Legitimate Emails: 
 Identifying Common Patterns and Language Tactics. 
 MIT Emerging Talent Program, Collaborative Data Science Project.
