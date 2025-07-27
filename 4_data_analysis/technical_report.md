@@ -173,7 +173,8 @@ The feature importance scores provide insights into which characteristics are mo
 
 ## Conclusion
 
-The analysis demonstrates that linguistic and psychological features can effectively distinguish phishing emails with 83.5% accuracy. The most discriminative features are sentiment patterns, psychological manipulation tactics, and linguistic complexity measures. However, the approach has limitations related to dataset age, domain specificity, and feature engineering assumptions.
+The analysis demonstrates that linguistic and psychological features can effectively distinguish phishing emails with 83.5% accuracy. The most discriminative features are sentiment patterns, psychological manipulation tactics, and linguistic complexity measures. However, the
+approach has limitations related to dataset age, domain specificity, and feature engineering assumptions.
 
 **Key Technical Insights**:
 
