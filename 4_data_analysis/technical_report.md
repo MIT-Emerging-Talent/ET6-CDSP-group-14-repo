@@ -107,7 +107,8 @@ professional language in favor of emotionally charged content.
 4. Punctuation density (0.091)
 5. Sentiment compound (0.076)
 
-**Model Selection Rationale**: Random Forest was chosen for its interpretability, ability to handle non-linear relationships, and robustness to overfitting.  
+**Model Selection Rationale**: Random Forest was chosen for its interpretability, ability to handle non-linear relationships,
+and robustness to overfitting.  
 The feature importance scores provide insights into which characteristics are most predictive of phishing attempts.
 
 **Performance Analysis**: The precision-recall trade-off (86.4% precision vs 77.1% recall) suggests the model is optimized to minimize false positives at the cost of missing some phishing emails. This trade-off is appropriate for production systems where false alarms can reduce user trust.
