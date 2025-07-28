@@ -18,6 +18,8 @@ import pandas as pd
 import seaborn as sns
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.tokenize import sent_tokenize, word_tokenize
+from scipy import stats
+from scipy.stats import ttest_ind
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report
@@ -422,7 +424,7 @@ class PhishingAnalyzer:
         )
 
     def perform_tfidf_analysis(self, max_features=1000):
-        """Perform TF-IDF analysis to find important terms"""
+        """Perform TF-IDF analysis to find important terms, normalized for email length"""
         print("Performing TF-IDF analysis...")
 
         # Create TF-IDF vectorizer
@@ -432,6 +434,7 @@ class PhishingAnalyzer:
             ngram_range=(1, 2),
             min_df=5,
             max_df=0.95,
+            norm="l2",  # L2 normalization helps with length differences
         )
 
         # Fit and transform
@@ -446,23 +449,41 @@ class PhishingAnalyzer:
         phishing_tfidf = tfidf_matrix[phishing_mask].mean(axis=0).A1
         safe_tfidf = tfidf_matrix[safe_mask].mean(axis=0).A1
 
+        # Additional normalization by average document length in each class
+        phishing_avg_length = self.clean_df[phishing_mask]["word_count"].mean()
+        safe_avg_length = self.clean_df[safe_mask]["word_count"].mean()
+
+        # Length-normalized scores (optional additional normalization)
+        phishing_tfidf_normalized = phishing_tfidf * (
+            safe_avg_length / phishing_avg_length
+        )
+
         # Create feature importance dataframes
         tfidf_comparison = pd.DataFrame(
             {
                 "feature": feature_names,
                 "phishing_score": phishing_tfidf,
                 "safe_score": safe_tfidf,
+                "phishing_score_normalized": phishing_tfidf_normalized,
                 "difference": phishing_tfidf - safe_tfidf,
+                "difference_normalized": phishing_tfidf_normalized - safe_tfidf,
             }
         )
 
-        # Store top distinguishing features
+        # Store top distinguishing features (using normalized scores)
         self.results["top_phishing_terms"] = tfidf_comparison.nlargest(
-            20, "difference"
-        )[["feature", "difference"]].to_dict("records")
-        self.results["top_safe_terms"] = tfidf_comparison.nsmallest(20, "difference")[
-            ["feature", "difference"]
-        ].to_dict("records")
+            20, "difference_normalized"
+        )[["feature", "difference_normalized"]].to_dict("records")
+        self.results["top_safe_terms"] = tfidf_comparison.nsmallest(
+            20, "difference_normalized"
+        )[["feature", "difference_normalized"]].to_dict("records")
+
+        # Store length information for reporting
+        self.results["length_info"] = {
+            "phishing_avg_length": phishing_avg_length,
+            "safe_avg_length": safe_avg_length,
+            "length_ratio": phishing_avg_length / safe_avg_length,
+        }
 
         return tfidf_matrix, tfidf_comparison
 
@@ -504,19 +525,72 @@ class PhishingAnalyzer:
                 phishing_values = self.clean_df[self.clean_df["label"] == 1][col]
                 safe_values = self.clean_df[self.clean_df["label"] == 0][col]
 
+                # Calculate means and standard deviations
+                phishing_mean = phishing_values.mean()
+                phishing_std = phishing_values.std()
+                safe_mean = safe_values.mean()
+                safe_std = safe_values.std()
+
+                # Calculate difference
+                difference = phishing_mean - safe_mean
+
+                # Calculate Cohen's d (effect size)
+                pooled_std = np.sqrt((phishing_values.var() + safe_values.var()) / 2)
+                cohens_d = difference / pooled_std if pooled_std > 0 else 0
+
+                # Perform t-test for statistical significance
+                t_stat, p_value = ttest_ind(
+                    phishing_values, safe_values, equal_var=False
+                )
+
+                # Calculate confidence interval for the difference in means
+                # Using Welch's t-test formula for unequal variances
+                se_diff = np.sqrt(
+                    (phishing_std**2 / len(phishing_values))
+                    + (safe_std**2 / len(safe_values))
+                )
+                df = (
+                    phishing_std**2 / len(phishing_values)
+                    + safe_std**2 / len(safe_values)
+                ) ** 2 / (
+                    (phishing_std**2 / len(phishing_values)) ** 2
+                    / (len(phishing_values) - 1)
+                    + (safe_std**2 / len(safe_values)) ** 2 / (len(safe_values) - 1)
+                )
+
+                t_critical = stats.t.ppf(0.975, df)  # 95% confidence interval
+                ci_lower = difference - t_critical * se_diff
+                ci_upper = difference + t_critical * se_diff
+
                 comparison_stats[col] = {
-                    "phishing_mean": phishing_values.mean(),
-                    "phishing_std": phishing_values.std(),
-                    "safe_mean": safe_values.mean(),
-                    "safe_std": safe_values.std(),
-                    "difference": phishing_values.mean() - safe_values.mean(),
-                    "effect_size": (phishing_values.mean() - safe_values.mean())
-                    / np.sqrt((phishing_values.var() + safe_values.var()) / 2),
+                    "phishing_mean": phishing_mean,
+                    "phishing_std": phishing_std,
+                    "safe_mean": safe_mean,
+                    "safe_std": safe_std,
+                    "difference": difference,
+                    "effect_size": cohens_d,
+                    "t_statistic": t_stat,
+                    "p_value": p_value,
+                    "significant": p_value < 0.05,
+                    "ci_lower": ci_lower,
+                    "ci_upper": ci_upper,
+                    "effect_interpretation": self._interpret_effect_size(abs(cohens_d)),
                 }
 
         self.results["feature_comparison"] = comparison_stats
 
         return comparison_stats
+
+    def _interpret_effect_size(self, abs_cohens_d):
+        """Interpret Cohen's d effect size according to standard conventions."""
+        if abs_cohens_d < 0.2:
+            return "negligible"
+        elif abs_cohens_d < 0.5:
+            return "small"
+        elif abs_cohens_d < 0.8:
+            return "medium"
+        else:
+            return "large"
 
     def create_individual_plots(self):
         """Create individual plots for slideshow use"""
@@ -550,7 +624,11 @@ class PhishingAnalyzer:
         for autotext in autotexts:
             autotext.set_color("white")
             autotext.set_fontweight("bold")
-        plt.savefig("plots/01_dataset_overview.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/01_dataset_overview.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
         # 2. Enhanced Sentiment Analysis
@@ -580,7 +658,7 @@ class PhishingAnalyzer:
         # 10. Enhanced Boxplot Comparison
         self._create_enhanced_boxplot_comparison()
 
-        print("Individual plots saved in 'plots/' directory!")
+        print("Individual plots saved in '../results/visualizations/' directory!")
 
     def _create_sentiment_plot(self):
         """Create enhanced sentiment analysis plot"""
@@ -695,7 +773,11 @@ class PhishingAnalyzer:
         ax4.legend(title="Email Type", title_fontsize=11, fontsize=10)
 
         plt.tight_layout()
-        plt.savefig("plots/02_sentiment_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/02_sentiment_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_radar_chart(self):
@@ -790,7 +872,11 @@ class PhishingAnalyzer:
         )
 
         plt.tight_layout()
-        plt.savefig("plots/03_psychological_radar.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/03_psychological_radar.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_text_complexity_plot(self):
@@ -906,7 +992,11 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig("plots/04_text_complexity.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/04_text_complexity.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_punctuation_analysis(self):
@@ -968,7 +1058,11 @@ class PhishingAnalyzer:
         ax4.set_yticklabels(["Safe", "Phishing"], rotation=0)
 
         plt.tight_layout()
-        plt.savefig("plots/05_punctuation_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/05_punctuation_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_tfidf_plots(self):
@@ -1033,7 +1127,11 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig("plots/06_tfidf_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/06_tfidf_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_feature_importance_plot(self):
@@ -1075,7 +1173,11 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig("plots/07_feature_importance.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/07_feature_importance.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_readability_plot(self):
@@ -1208,7 +1310,11 @@ class PhishingAnalyzer:
         )
 
         plt.tight_layout()
-        plt.savefig("plots/08_readability_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/08_readability_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_url_email_plot(self):
@@ -1277,7 +1383,11 @@ class PhishingAnalyzer:
         ax4.set_xticklabels(["Safe", "Phishing"], rotation=0)
 
         plt.tight_layout()
-        plt.savefig("plots/09_url_email_patterns.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            "../results/visualizations/09_url_email_patterns.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_enhanced_boxplot_comparison(self):
@@ -1332,6 +1442,29 @@ class PhishingAnalyzer:
             # Add median values as annotations with better positioning
             safe_median = plot_df[plot_df["label"] == 0][feature].median()
             phishing_median = plot_df[plot_df["label"] == 1][feature].median()
+
+            # Get statistical significance for this feature
+            if hasattr(self, "results") and "feature_comparison" in self.results:
+                feature_stats = self.results["feature_comparison"].get(feature, {})
+                p_value = feature_stats.get("p_value", 1.0)
+                effect_size = feature_stats.get("effect_size", 0.0)
+
+                # Determine significance level
+                if p_value < 0.001:
+                    sig_marker = "***"
+                    sig_text = "p < 0.001"
+                elif p_value < 0.01:
+                    sig_marker = "**"
+                    sig_text = f"p = {p_value:.3f}"
+                elif p_value < 0.05:
+                    sig_marker = "*"
+                    sig_text = f"p = {p_value:.3f}"
+                else:
+                    sig_marker = "ns"
+                    sig_text = f"p = {p_value:.3f}"
+            else:
+                sig_marker = ""
+                sig_text = ""
 
             # Calculate y-position for annotations (slightly above the median line)
             y_range = ax.get_ylim()[1] - ax.get_ylim()[0]
@@ -1397,6 +1530,26 @@ class PhishingAnalyzer:
                 transform=ax.transAxes,
             )
 
+            # Add statistical significance marker
+            if sig_text:
+                ax.text(
+                    0.5,
+                    ax.get_ylim()[1] * 0.98,
+                    sig_text,
+                    ha="center",
+                    va="top",
+                    fontweight="bold",
+                    fontsize=10,
+                    bbox=dict(
+                        boxstyle="round,pad=0.2",
+                        facecolor="white",
+                        alpha=0.9,
+                        edgecolor="black",
+                        linewidth=1,
+                    ),
+                    transform=ax.transAxes,
+                )
+
             # Enhance box plot colors
             for patch in box_plot.artists:
                 patch.set_linewidth(2)
@@ -1427,7 +1580,9 @@ class PhishingAnalyzer:
 
         plt.tight_layout(rect=[0, 0, 1, 0.92])
         plt.savefig(
-            "plots/10_enhanced_boxplot_comparison.png", dpi=300, bbox_inches="tight"
+            "../results/visualizations/10_enhanced_boxplot_comparison.png",
+            dpi=300,
+            bbox_inches="tight",
         )
         plt.close()
 
@@ -1491,19 +1646,23 @@ class PhishingAnalyzer:
         os.makedirs("plots", exist_ok=True)
 
         # Save cleaned dataset with all features
-        self.clean_df.to_csv("phishing_analysis_dataset.csv", index=False)
+        self.clean_df.to_csv(
+            "../results/statistical_analysis/phishing_analysis_dataset.csv", index=False
+        )
 
         # Save detailed comparison statistics
         comparison_df = pd.DataFrame(self.results["feature_comparison"]).T
-        comparison_df.to_csv("feature_comparison_stats.csv")
+        comparison_df.to_csv(
+            "../results/statistical_analysis/feature_comparison_stats.csv"
+        )
 
         # Save TF-IDF results
         if "top_phishing_terms" in self.results:
             pd.DataFrame(self.results["top_phishing_terms"]).to_csv(
-                "top_phishing_terms.csv", index=False
+                "../results/statistical_analysis/top_phishing_terms.csv", index=False
             )
             pd.DataFrame(self.results["top_safe_terms"]).to_csv(
-                "top_safe_terms.csv", index=False
+                "../results/statistical_analysis/top_safe_terms.csv", index=False
             )
 
         # Create comprehensive text report
@@ -1629,19 +1788,21 @@ class PhishingAnalyzer:
 
         report.append("")
         report.append("VISUALIZATION FILES CREATED:")
-        report.append("- plots/01_dataset_overview.png")
-        report.append("- plots/02_sentiment_analysis.png")
-        report.append("- plots/03_psychological_radar.png")
-        report.append("- plots/04_text_complexity.png")
-        report.append("- plots/05_punctuation_analysis.png")
-        report.append("- plots/06_tfidf_analysis.png")
-        report.append("- plots/07_feature_importance.png")
-        report.append("- plots/08_readability_analysis.png")
-        report.append("- plots/09_url_email_patterns.png")
-        report.append("- plots/10_enhanced_boxplot_comparison.png (NEW!)")
+        report.append("- ../results/visualizations/01_dataset_overview.png")
+        report.append("- ../results/visualizations/02_sentiment_analysis.png")
+        report.append("- ../results/visualizations/03_psychological_radar.png")
+        report.append("- ../results/visualizations/04_text_complexity.png")
+        report.append("- ../results/visualizations/05_punctuation_analysis.png")
+        report.append("- ../results/visualizations/06_tfidf_analysis.png")
+        report.append("- ../results/visualizations/07_feature_importance.png")
+        report.append("- ../results/visualizations/08_readability_analysis.png")
+        report.append("- ../results/visualizations/09_url_email_patterns.png")
+        report.append(
+            "- ../results/visualizations/10_enhanced_boxplot_comparison.png (NEW!)"
+        )
 
         # Save report
-        with open("enhanced_phishing_analysis_report.txt", "w") as f:
+        with open("../results/reports/enhanced_phishing_analysis_report.txt", "w") as f:
             f.write("\n".join(report))
 
     def run_complete_analysis(self):
@@ -1674,16 +1835,18 @@ class PhishingAnalyzer:
         print("=" * 70)
         print("Enhanced analysis complete! Check the generated files:")
         print("- phishing_analysis_dataset.csv: Complete dataset with all features")
-        print("- plots/: Directory containing 10 individual visualization files")
+        print(
+            "- ../results/visualizations/: Directory containing 10 individual visualization files"
+        )
         print("- enhanced_phishing_analysis_report.txt: Comprehensive text report")
         print("- Various CSV files with detailed statistics")
         print("\nVisualization files are ready for slideshow presentation!")
         print(
-            "✨ NEW: Enhanced boxplot comparison (plots/10_enhanced_boxplot_comparison.png)!"
+            "✨ NEW: Enhanced boxplot comparison (../results/visualizations/10_enhanced_boxplot_comparison.png)!"
         )
 
 
 if __name__ == "__main__":
     # Initialize and run analysis
-    analyzer = PhishingAnalyzer("1_datasets/Enron.csv")
+    analyzer = PhishingAnalyzer("../1_datasets/Enron.csv")
     analyzer.run_complete_analysis()

@@ -13,6 +13,17 @@
 
 This project investigates the linguistic patterns and psychological manipulation tactics that distinguish phishing emails from legitimate communications. Using a dataset of 29,767 emails, we applied statistical analysis and machine learning to identify key features that make phishing emails effective.
 
+### Research Hypothesis
+
+**Primary Hypothesis**: Phishing emails exhibit distinct linguistic patterns and psychological manipulation tactics that can be quantitatively measured and distinguished from legitimate emails.
+
+**Specific Hypotheses**:
+
+1. **H1**: Phishing emails will show significantly higher emotional intensity (both positive and negative sentiment) compared to legitimate emails
+2. **H2**: Phishing emails will contain significantly more psychological manipulation keywords (urgency, financial terms, rewards, action words)
+3. **H3**: Phishing emails will exhibit different structural patterns (more URLs, different punctuation usage, vocabulary complexity)
+4. **H4**: These linguistic differences will be statistically significant (p < 0.05) and show meaningful effect sizes (Cohen's d > 0.2)
+
 ### Key Findings
 
 🔍 **Phishing emails use 85% more negative sentiment** and contain **3.5x more exclamation marks** than legitimate emails
@@ -22,6 +33,35 @@ This project investigates the linguistic patterns and psychological manipulation
 💰 **57% higher frequency of financial terms** and urgency language in phishing attempts
 
 🧠 **Psychological manipulation tactics** clearly identifiable through linguistic analysis
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Analysis
+
+```bash
+# Navigate to source directory
+cd src/
+
+# Run main analysis (generates all visualizations and statistical results)
+python phishing_analysis.py
+
+# Run enhanced statistical analysis (adds significance testing)
+python enhanced_statistical_report.py
+```
+
+### View Results
+
+- **Visualizations**: Check `results/visualizations/` for all plots
+- **Statistical Data**: Check `results/statistical_analysis/` for CSV files
+- **Reports**: Check `results/reports/` for detailed analysis documents
 
 ---
 
@@ -35,17 +75,24 @@ This project investigates the linguistic patterns and psychological manipulation
 
 ```text
 ├── README.md                        # Project overview (you are here)
+├── requirements.txt                 # Python dependencies
 ├── guide.md                         # Detailed usage guidelines
 ├── CONTRIBUTING.md                  # Contribution guidelines
-├── collaboration/                   # Team norms and retrospectives
-├── notes/                          # Shared learning resources
-├── 0_domain_study/                 # Phishing research background
-├── 1_datasets/                     # Raw and processed email data
-├── 2_data_preparation/            # Data cleaning and feature extraction
-├── 3_data_exploration/            # Initial data understanding
-├── 4_data_analysis/               # Main analysis and results
-├── 5_communication_strategy/      # Results communication planning
-└── 6_final_presentation/          # Presentation materials
+├── src/                            # Source code and scripts
+│   ├── phishing_analysis.py       # Main comprehensive analysis script
+│   ├── enhanced_statistical_report.py # Statistical analysis and reporting
+│   ├── data_cleaning.py           # Data preprocessing script
+│   └── README.md                  # Source code documentation
+├── results/                        # All analysis outputs and results
+│   ├── visualizations/            # Generated plots and charts
+│   ├── statistical_analysis/      # CSV files with statistical results
+│   ├── reports/                   # Human-readable analysis reports
+│   └── README.md                  # Results documentation
+├── 1_datasets/                    # Raw and processed email data
+├── 2_data_preparation/            # Data cleaning notebooks and documentation
+├── 0_domain_study/                # Phishing research background
+├── collaboration/                 # Team norms and retrospectives
+└── notes/                         # Shared learning resources
 ```
 
 ---
