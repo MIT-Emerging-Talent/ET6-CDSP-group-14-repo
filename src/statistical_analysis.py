@@ -195,8 +195,12 @@ class PhishingStatisticalAnalyzer:
         summary_df = summary_df.drop("abs_cohens_d", axis=1)
 
         # Save to CSV
-        summary_df.to_csv("../results/statistical_analysis/statistical_summary.csv", index=False)
-        print("Statistical summary saved to '../results/statistical_analysis/statistical_summary.csv'")
+        summary_df.to_csv(
+            "../results/statistical_analysis/statistical_summary.csv", index=False
+        )
+        print(
+            "Statistical summary saved to '../results/statistical_analysis/statistical_summary.csv'"
+        )
 
         return summary_df
 
@@ -242,7 +246,7 @@ class PhishingStatisticalAnalyzer:
         color_map = dict(zip(unique_categories, colors))
 
         # Plot effect sizes
-        bars = plt.barh(
+        plt.barh(
             range(len(features)),
             effect_sizes,
             color=[color_map[cat] for cat in categories],
@@ -304,7 +308,9 @@ class PhishingStatisticalAnalyzer:
 
         plt.tight_layout()
         plt.savefig(
-            "../results/visualizations/effect_sizes_statistical_analysis.png", dpi=300, bbox_inches="tight"
+            "../results/visualizations/effect_sizes_statistical_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
         )
         plt.show()
 
@@ -405,7 +411,9 @@ class PhishingStatisticalAnalyzer:
         print("\n" + "=" * 60)
         print("Statistical analysis complete!")
         print("Files generated:")
-        print("• ../results/statistical_analysis/statistical_summary.csv - Detailed statistical results")
+        print(
+            "• ../results/statistical_analysis/statistical_summary.csv - Detailed statistical results"
+        )
         print(
             "• ../results/visualizations/effect_sizes_statistical_analysis.png - Effect size visualization"
         )
@@ -415,9 +423,7 @@ class PhishingStatisticalAnalyzer:
 
 if __name__ == "__main__":
     # Check if feature dataset exists from main analysis
-    feature_file = (
-        "../results/statistical_analysis/phishing_analysis_dataset.csv"
-    )
+    feature_file = "../results/statistical_analysis/phishing_analysis_dataset.csv"
 
     # For now, use the existing CSV with computed features
     try:

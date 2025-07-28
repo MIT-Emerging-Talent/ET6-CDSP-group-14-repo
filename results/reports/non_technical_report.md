@@ -21,7 +21,7 @@ Phishing emails use significantly more negative emotional language and create ur
 
 **Real-World Example**: A phishing email might say "URGENT: Your account has been compromised! Click here immediately to secure your funds!" - using both urgency and negative sentiment to create panic.
 
-![Sentiment Analysis](plots/02_sentiment_analysis.png)
+![Sentiment Analysis](../visualizations/02_sentiment_analysis.png)
 
 ### 2. Phishing Emails Use Psychological Manipulation
 
@@ -37,7 +37,7 @@ Financial pressure creates fear of loss, reward promises trigger greed, action d
 thinking time, and urgency prevents careful consideration. These tactics work because they target
 fundamental human psychology - the desire to avoid loss and gain rewards quickly.
 
-![Psychological Tactics](plots/03_psychological_radar.png)
+![Psychological Tactics](../visualizations/03_psychological_radar.png)
 
 ### 3. Language Complexity Reveals Intent (But NOT Email Length)
 
@@ -60,7 +60,7 @@ Phishing emails have distinctive writing patterns:
 
 **Real-World Example**: A phishing email might use technical terms like "authentication protocol" and "security verification" to sound legitimate while including multiple suspicious links.
 
-![Text Complexity](plots/04_text_complexity.png)
+![Text Complexity](../visualizations/04_text_complexity.png)
 
 ### 4. Most Dangerous Words in Phishing Emails
 
@@ -77,7 +77,7 @@ The top terms that signal phishing attempts:
 
 **How to Use This Information**: When you see multiple of these terms in an email, especially combined with urgency or emotional language, it's a strong warning sign. Legitimate business emails rarely use such high concentrations of these trigger words.
 
-![Top Phishing Terms](plots/06_tfidf_analysis.png)
+![Top Phishing Terms](../visualizations/06_tfidf_analysis.png)
 
 ## How Reliable Are These Findings?
 
@@ -135,19 +135,19 @@ We have high confidence in our findings based on rigorous statistical analysis:
 
 ### Dataset Overview
 
-![Dataset Overview](plots/01_dataset_overview.png)
+![Dataset Overview](../visualizations/01_dataset_overview.png)
 
 ### Punctuation Patterns
 
-![Punctuation Analysis](plots/05_punctuation_analysis.png)
+![Punctuation Analysis](../visualizations/05_punctuation_analysis.png)
 
 ### Feature Importance
 
-![Feature Importance](plots/07_feature_importance.png)
+![Feature Importance](../visualizations/07_feature_importance.png)
 
 ### URL and Email Patterns
 
-![URL Patterns](plots/09_url_email_patterns.png)
+![URL Patterns](../visualizations/09_url_email_patterns.png)
 
 ## Conclusion
 

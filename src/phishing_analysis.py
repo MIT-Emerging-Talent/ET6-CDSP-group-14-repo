@@ -1447,23 +1447,17 @@ class PhishingAnalyzer:
             if hasattr(self, "results") and "feature_comparison" in self.results:
                 feature_stats = self.results["feature_comparison"].get(feature, {})
                 p_value = feature_stats.get("p_value", 1.0)
-                effect_size = feature_stats.get("effect_size", 0.0)
 
-                # Determine significance level
+                # Determine significance level and text
                 if p_value < 0.001:
-                    sig_marker = "***"
                     sig_text = "p < 0.001"
                 elif p_value < 0.01:
-                    sig_marker = "**"
                     sig_text = f"p = {p_value:.3f}"
                 elif p_value < 0.05:
-                    sig_marker = "*"
                     sig_text = f"p = {p_value:.3f}"
                 else:
-                    sig_marker = "ns"
                     sig_text = f"p = {p_value:.3f}"
             else:
-                sig_marker = ""
                 sig_text = ""
 
             # Calculate y-position for annotations (slightly above the median line)

@@ -247,7 +247,7 @@ def create_effect_size_plot(df):
             colors.append("#7f7f7f")  # Gray for non-significant
 
     # Create horizontal bar plot
-    bars = plt.barh(range(len(features)), effect_sizes, color=colors, alpha=0.7)
+    plt.barh(range(len(features)), effect_sizes, color=colors, alpha=0.7)
 
     # Add significance annotations
     for i, (effect, p_val, color) in enumerate(zip(effect_sizes, p_values, colors)):
