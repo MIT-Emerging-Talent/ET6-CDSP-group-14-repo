@@ -1,4 +1,4 @@
-# 🐼 The Pandas Pact
+# 🛡️ Phishing Email Linguistic Analysis Project
 
 Welcome to the official repository of **The Pandas Pact** – a cross-cultural, collaborative team committed to learning, growing, and delivering impactful work together. This repository houses our comprehensive phishing email detection project, including all data analysis, visualizations, and research findings.
 
@@ -69,21 +69,40 @@ Team coordination, retrospectives, and project management documentation.
 
 ### ✅ Our Values
 
-- Respecting each other's time and communication styles
-- Open, constructive feedback
-- Clear expectations and accountability
-- Empathy, support, and trust in each other
-- Regular reflection and adaptation of our practices
+- [Dataset Overview](./1_datasets/README.md) - Data sources and characteristics
+- [Data Preparation](./2_data_preparation/README.md) - Cleaning and processing methodology
+- [Feature Engineering](./2_data_preparation/data_cleaning.ipynb) - Detailed preprocessing pipeline
 
-📄 Read our full group norms in [collaboration/README.md](./collaboration/README.md)
+📄 Read our full group norms in [collaboration/README.md](./collaboration/README.md
 
 ---
 
-## 💬 Communication
+## 🔮 Future Research Directions
 
-We coordinate and communicate using:
+1. **Contemporary Phishing Analysis** - Study current phishing campaigns vs historical data
+2. **Multilingual Detection** - Extend analysis to non-English phishing emails
+3. **Real-World Validation** - Test findings with live email filtering systems
+4. **Cross-Platform Analysis** - Compare email phishing with SMS and social media tactics
+5. **User Behavior Integration** - Incorporate human response patterns into detection models
+
+---
+
+## ⚠️ Limitations
+
+- **Historical Data**: Enron dataset may not reflect current phishing techniques
+- **Corporate Context**: Business email environment may not generalize to personal emails
+- **English Only**: Analysis limited to English-language communications
+- **Balanced Dataset**: Artificial 50/50 split doesn't reflect real-world phishing prevalence (typically <1%)
+
+---
+
+## 🤝 Collaboration & Communication
+
+### Team Coordination
 
 - **Slack Channel**: `#et6_cdsp_group_14`
+
 - **Meetings**: Scheduled weekly or as needed via Zoom or Google Meet
 - **Documentation**: Shared and updated in this repository
 - **Meeting Notes**: Action items and summaries posted in Slack and stored in [collaboration/](./collaboration/)
+
