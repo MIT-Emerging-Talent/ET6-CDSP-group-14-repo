@@ -105,4 +105,3 @@ Team coordination, retrospectives, and project management documentation.
 - **Meetings**: Scheduled weekly or as needed via Zoom or Google Meet
 - **Documentation**: Shared and updated in this repository
 - **Meeting Notes**: Action items and summaries posted in Slack and stored in [collaboration/](./collaboration/)
-
