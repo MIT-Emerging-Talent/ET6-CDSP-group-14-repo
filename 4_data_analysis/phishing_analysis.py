@@ -15,9 +15,11 @@ import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 import pandas as pd
+import scipy.stats as stats
 import seaborn as sns
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.tokenize import sent_tokenize, word_tokenize
+from scipy.stats import ttest_ind
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report
@@ -74,96 +76,7 @@ class PhishingAnalyzer:
             "phishing_percentage": (len(self.df[self.df["label"] == 1]) / len(self.df))
             * 100,
         }
-
-    def clean_data(self):
-        """Clean and preprocess the email data"""
-        print("Cleaning data...")
-
-        # Create a copy for cleaning
         self.clean_df = self.df.copy()
-
-        # Remove rows with missing body text
-        self.clean_df = self.clean_df.dropna(subset=["body"])
-
-        # Remove empty bodies
-        self.clean_df = self.clean_df[self.clean_df["body"].str.strip() != ""]
-
-        # Basic text cleaning function
-        def clean_text(text):
-            if pd.isna(text):
-                return ""
-            # Convert to lowercase
-            text = text.lower()
-
-            # Remove Enron-specific terms and patterns more aggressively
-            # Remove specific Enron corporate phrases and signatures
-            enron_patterns = [
-                r"enron\s+capital\s*&?\s*trade\s*resources?\s*corp?\.?",
-                r"enron\s+north\s+america\s+corp?\.?",
-                r"enron\s+corp\.?",
-                r"enron\s+global\s+markets",
-                r"forwarded\s+by\s+[^/]+/\s*hou\s*/\s*ect",
-                r"forwarded\s+by\s+[^/]+/\s*hol\s*/\s*aepin",
-                r"/\s*hou\s*/\s*ect\s+on",
-                r"/\s*hol\s*/\s*aepin\s+on",
-            ]
-
-            for pattern in enron_patterns:
-                text = re.sub(pattern, " ", text)
-
-            # Remove individual Enron-specific words
-            enron_words = [
-                "ect",
-                "hou",
-                "enron",
-                "hpl",
-                "hplno",
-                "hplo",
-                "aepin",
-                "hol",
-            ]
-            for word in enron_words:
-                # Remove whole words (with word boundaries)
-                text = re.sub(r"\b" + re.escape(word) + r"\b", " ", text)
-
-            # Remove email forwarding headers and timestamps
-            text = re.sub(r"- - - - -.*?- - - - -", " ", text)
-            text = re.sub(r"forwarded by .+? on \d+/\d+/\d+", " ", text)
-            text = re.sub(r"original message.*?from:", " ", text)
-            text = re.sub(r"sent:\s*\w+,.*?\d+:\d+\s*[ap]m", " ", text)
-
-            # Remove common email artifacts
-            text = re.sub(r"see attached file\s*:?", " ", text)
-            text = re.sub(r"mailto\s*:", " ", text)
-            text = re.sub(r"\b\w+\.\w+@\w+\.\w+\b", " ", text)  # Remove email addresses
-
-            # Remove numbers (standalone digits, dates, file numbers, etc.)
-            text = re.sub(r"\b\d+\b", " ", text)  # Remove standalone numbers
-            text = re.sub(r"\b\d+\.\d+\b", " ", text)  # Remove decimal numbers
-            text = re.sub(
-                r"\b\w*\d+\w*\b", " ", text
-            )  # Remove words containing numbers
-
-            # Remove extra whitespace
-            text = re.sub(r"\s+", " ", text)
-            # Remove special characters but keep basic punctuation and @ for email detection
-            text = re.sub(r"[^\w\s\.\,\!\?\-@]", " ", text)
-            return text.strip()
-
-        self.clean_df["body_clean"] = self.clean_df["body"].apply(clean_text)
-
-        # Remove very short emails (less than 10 characters)
-        self.clean_df = self.clean_df[self.clean_df["body_clean"].str.len() >= 10]
-
-        print(f"After cleaning: {len(self.clean_df)} emails remaining")
-
-        # Update results
-        self.results["cleaned_stats"] = {
-            "remaining_emails": len(self.clean_df),
-            "removed_emails": len(self.df) - len(self.clean_df),
-            "removal_percentage": ((len(self.df) - len(self.clean_df)) / len(self.df))
-            * 100,
-        }
 
     def calculate_basic_features(self):
         """Calculate basic text features for each email"""
@@ -439,8 +352,8 @@ class PhishingAnalyzer:
         feature_names = self.tfidf_vectorizer.get_feature_names_out()
 
         # Separate by class
-        phishing_mask = self.clean_df["label"] == 1
-        safe_mask = self.clean_df["label"] == 0
+        phishing_mask = (self.clean_df["label"] == 1).values
+        safe_mask = (self.clean_df["label"] == 0).values
 
         # Calculate mean TF-IDF scores for each class
         phishing_tfidf = tfidf_matrix[phishing_mask].mean(axis=0).A1
@@ -501,25 +414,59 @@ class PhishingAnalyzer:
 
         for col in numeric_columns:
             if col in self.clean_df.columns:
-                phishing_values = self.clean_df[self.clean_df["label"] == 1][col]
-                safe_values = self.clean_df[self.clean_df["label"] == 0][col]
+                phishing_values = self.clean_df[self.clean_df["label"] == 1][
+                    col
+                ].dropna()
+                safe_values = self.clean_df[self.clean_df["label"] == 0][col].dropna()
 
-                comparison_stats[col] = {
-                    "phishing_mean": phishing_values.mean(),
-                    "phishing_std": phishing_values.std(),
-                    "safe_mean": safe_values.mean(),
-                    "safe_std": safe_values.std(),
-                    "difference": phishing_values.mean() - safe_values.mean(),
-                    "effect_size": (phishing_values.mean() - safe_values.mean())
-                    / np.sqrt((phishing_values.var() + safe_values.var()) / 2),
+                # Calculate means and std
+                phishing_mean = phishing_values.mean()
+                phishing_std = phishing_values.std()
+                safe_mean = safe_values.mean()
+                safe_std = safe_values.std()
+
+                # Effect size (Cohen's d)
+                pooled_std = np.sqrt((phishing_values.var() + safe_values.var()) / 2)
+                effect_size = (
+                    (phishing_mean - safe_mean) / pooled_std if pooled_std > 0 else 0
+                )
+
+                stats_dict = {
+                    "phishing_mean": phishing_mean,
+                    "phishing_std": phishing_std,
+                    "safe_mean": safe_mean,
+                    "safe_std": safe_std,
+                    "difference": phishing_mean - safe_mean,
+                    "effect_size": effect_size,
                 }
 
-        self.results["feature_comparison"] = comparison_stats
+                # Compute 95% CI if effect size is medium or large
+                if abs(effect_size) >= 0.5:
+                    t_stat, p_val = ttest_ind(
+                        phishing_values, safe_values, equal_var=False
+                    )
+                    # CI for difference of means
+                    se_diff = np.sqrt(
+                        phishing_values.var() / len(phishing_values)
+                        + safe_values.var() / len(safe_values)
+                    )
+                    ci_low, ci_high = stats.t.interval(
+                        0.95,
+                        df=min(len(phishing_values), len(safe_values)) - 1,
+                        loc=phishing_mean - safe_mean,
+                        scale=se_diff,
+                    )
+                    stats_dict["95%_CI_difference"] = "({:.6f}, {:.6f})".format(
+                        ci_low, ci_high
+                    )
+                    stats_dict["p_value"] = p_val
 
+                comparison_stats[col] = stats_dict
+
+        self.results["feature_comparison"] = comparison_stats
         return comparison_stats
 
     def create_individual_plots(self):
-        """Create individual plots for slideshow use"""
         print("Creating individual visualization plots...")
 
         # Create plots directory
@@ -1491,19 +1438,19 @@ class PhishingAnalyzer:
         os.makedirs("plots", exist_ok=True)
 
         # Save cleaned dataset with all features
-        self.clean_df.to_csv("phishing_analysis_dataset.csv", index=False)
+        self.clean_df.to_csv("1_datasets/phishing_analysis_dataset.csv")
 
         # Save detailed comparison statistics
         comparison_df = pd.DataFrame(self.results["feature_comparison"]).T
-        comparison_df.to_csv("feature_comparison_stats.csv")
+        comparison_df.to_csv("4_data_analysis/feature_comparison_stats.csv")
 
         # Save TF-IDF results
         if "top_phishing_terms" in self.results:
             pd.DataFrame(self.results["top_phishing_terms"]).to_csv(
-                "top_phishing_terms.csv", index=False
+                "4_data_analysis/top_phishing_terms.csv", index=False
             )
             pd.DataFrame(self.results["top_safe_terms"]).to_csv(
-                "top_safe_terms.csv", index=False
+                "4_data_analysis/top_phishing_terms.csv", index=False
             )
 
         # Create comprehensive text report
@@ -1641,17 +1588,18 @@ class PhishingAnalyzer:
         report.append("- plots/10_enhanced_boxplot_comparison.png (NEW!)")
 
         # Save report
-        with open("enhanced_phishing_analysis_report.txt", "w") as f:
+        with open("4_data_analysis/enhanced_phishing_analysis_report.txt", "w") as f:
             f.write("\n".join(report))
 
     def run_complete_analysis(self):
         """Run the complete enhanced analysis pipeline"""
         print("Starting enhanced comprehensive phishing email analysis...")
         print("=" * 70)
+        # Remove garbage rows like ". xls" from analysis
 
         # Load and clean data
         self.load_data()
-        self.clean_data()
+        # self.clean_data()
 
         # Calculate features
         self.calculate_basic_features()
@@ -1681,9 +1629,13 @@ class PhishingAnalyzer:
         print(
             "✨ NEW: Enhanced boxplot comparison (plots/10_enhanced_boxplot_comparison.png)!"
         )
+        comparison_stats = self.compare_classes()
+        pd.DataFrame.from_dict(comparison_stats, orient="index").to_csv(
+            "4_data_analysis/feature_comparison_stats.csv"
+        )
 
 
 if __name__ == "__main__":
     # Initialize and run analysis
-    analyzer = PhishingAnalyzer("1_datasets/Enron.csv")
+    analyzer = PhishingAnalyzer("1_datasets/Enron_cleaned.csv")
     analyzer.run_complete_analysis()
