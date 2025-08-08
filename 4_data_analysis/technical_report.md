@@ -1,5 +1,3 @@
-# Technical Report: Phishing Email Detection Analysis
-
 ## 1. Introduction
 
 Phishing emails remain a critical cybersecurity threat, leveraging social engineering to deceive recipients into compromising actions. We conducted an in-depth analysis of 29,711 emails from the Enron corpus — 15,762 safe (53.05%) and 13,949 phishing (46.95%) — to identify textual fingerprints and build an
@@ -28,23 +26,23 @@ ______________________________________________________________________
 
 We engineered **22 textual features** across four categories:
 
-**A. Linguistic Complexity**
+#### A. Linguistic Complexity
 
 - Word count, character count, sentence count
 - Average word length, average sentence length
 - Type-token ratio (vocabulary diversity)
 
-**B. Readability & Style**
+#### B. Readability & Style
 
 - Flesch Reading Ease, Flesch-Kincaid Grade, Gunning Fog Index
 - Punctuation density, exclamation ratio, question ratio, special character ratio
 
-**C. Psychological Cues**
+#### C. Psychological Cues
 
 - VADER sentiment scores: negative, neutral, positive
 - Manipulation lexicons: urgency words, action words, financial terms, fear words, reward words
 
-**D. Structural Patterns**
+#### D. Structural Patterns
 
 - URL count, email-pattern count (forwards, CC markers, signature lines)
 
