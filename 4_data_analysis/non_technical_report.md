@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-We analyzed 29767 emails to understand how to spot phishing attempts. Our analysis found clear patterns that distinguish dangerous phishing emails from legitimate business communications. The most important finding is that **phishing emails use specific psychological tactics and language patterns**.
+We cleaned and analyzed 29711 emails to understand how to spot phishing attempts. Our analysis found clear patterns that distinguish dangerous phishing emails from legitimate business communications. The most important finding is that **phishing emails use specific psychological tactics and language patterns**.
 We further create a model that can detect phishing emails with about 84% accuracy.
 
 ## Key Findings
