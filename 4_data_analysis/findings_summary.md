@@ -38,7 +38,9 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 ## Cohen’s d Effect Sizes
 
 🟥 **Large (≥ 0.50)**   sentiment_neg (0.503)
+
 🟧 **Medium (0.30–<0.50)**  sentiment_neu (-0.489), type_token_ratio (0.372), exclamation_ratio (0.365), avg_word_length (0.340), financial_words (0.316), reward_words (0.305)
+
 🟨 **Small (0.20–<0.30)** | url_count (0.270), action_words (0.197), urgency_words (0.202), flesch_score (-0.227), sentiment_pos (0.229), email_pattern_count (-0.255)
 
 ## Model Performance — Confusion Matrix
