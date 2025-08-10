@@ -37,18 +37,16 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 
 ## Cohen’s d Effect Sizes
 
-| Magnitude                |Features                                                                                                    |
-|-------------------------|-------------------------------------------------------------------------------------------------------------|
-| 🟥 **Large (≥ 0.50)**    | sentiment_neg (0.503)                                                                                        |
-| 🟧 **Medium (0.30–<0.50)** | sentiment_neu (-0.489), type_token_ratio (0.372), exclamation_ratio (0.365), avg_word_length (0.340), financial_words (0.316), reward_words (0.305) |
-| 🟨 **Small (0.20–<0.30)** | url_count (0.270), action_words (0.197), urgency_words (0.202), flesch_score (-0.227), sentiment_pos (0.229), email_pattern_count (-0.255) |
+🟥 **Large (≥ 0.50)**   sentiment_neg (0.503)
+🟧 **Medium (0.30–<0.50)**  sentiment_neu (-0.489), type_token_ratio (0.372), exclamation_ratio (0.365), avg_word_length (0.340), financial_words (0.316), reward_words (0.305)
+🟨 **Small (0.20–<0.30)** | url_count (0.270), action_words (0.197), urgency_words (0.202), flesch_score (-0.227), sentiment_pos (0.229), email_pattern_count (-0.255)
 
 ## Model Performance — Confusion Matrix
 
-|                 | Predicted Phishing 🟥 | Predicted Safe 🟩 |
-|-----------------|----------------------|------------------|
-| **Actual Phishing 🟥** | **TP = 10,752** | **FN = 3,197** |
-| **Actual Safe 🟩**     | **FP = 2,493**  | **TN = 13,268** |
+|                 | Predicted Phishing 🟥 | Predicted Safe  🟩 |
+|-----------------|----------------------|------------------    |
+| **Actual Phishing 🟥** | **TP = 10,752** | **FN = 3,197**    |
+| **Actual Safe 🟩**     | **FP = 2,493**  | **TN = 13,268**   |
 
 **Metrics:**
 
@@ -71,7 +69,8 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 
 ## Conclusion
 
-Using the report’s Cohen’s d scale, **negative sentiment** was the only feature in the large category, with several medium and small effects observed. While many individual features are not strong enough to detect phishing alone, **in combination they form a powerful detection tool** — as demonstrated by the Random Forest model’s 83.5% accuracy in phishing email detection.  
+Using the report’s Cohen’s d scale, **negative sentiment** was the only feature in the large category, with several medium and small effects observed. While many individual features are not strong enough to detect phishing alone, **in combination they form a powerful detection tool** — as demonstrated by the Random Forest model’s 83.5% accuracy in
+phishing email detection.
 
 However, since the model was only evaluated with 5-fold cross-validation on the Enron dataset, the next step should include **external validation** on more recent and diverse datasets to confirm generalizability and ensure robustness against evolving phishing tactics.
 
