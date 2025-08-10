@@ -26,7 +26,8 @@ This folder contains scripts and notebooks for cleaning, transforming, and prepa
 
 **Output**:
 
-- Cleaned and feature-enriched dataset with 22 linguistic and psychological features
+- Cleaned and feature-enriched dataset with **26** linguistic and psychological features
+- Saved as `Enron_cleaned.csv` in `/1_datasets`
 - Ready for statistical analysis and machine learning modeling
 
 **Dependencies**: See `../4_data_analysis/requirements.txt` for required Python packages
@@ -56,6 +57,6 @@ We convert text into measurable patterns using several techniques:
 To run the data cleaning pipeline:
 
 1. Ensure the raw dataset is in `/1_datasets/Enron.csv`
-2. Open `data_cleaning.ipynb` in Jupyter Notebook
+2. Open `data_cleaning.py`
 3. Run all cells to process the data and extract features
-4. The cleaned dataset will be ready for analysis in `/4_data_analysis`
+4. The cleaned dataset will be saved as `Enron_cleaned.csv` in `/1_datasets`

@@ -44,7 +44,7 @@ We particularly focus on the **linguistic layer**—how language is engineered t
 
 We updated the research question from the above to
 
->**A Linguistic Analysis of Phishing vs Legitimate Emails: Identifying Common Patterns and Language Tactics**
+>**How do phishing emails differ from legitmate emails interms of common linguistic patterns and language tactics?**
 
 Given email’s dominant role in phishing, and the centrality of language in deceiving recipients, this research question aims to uncover patterns in wording, tone, and psychological triggers. The revised question aims to address for the lack of data in user click through behavior while still uncovering lingustic patterns
 in phishing and legitimate emails.

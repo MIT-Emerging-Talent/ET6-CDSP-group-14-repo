@@ -39,7 +39,7 @@ TOP PHISHING-ASSOCIATED TERMS:
  1. www (score: 0.0286)
  2. click (score: 0.0245)
  3. save (score: 0.0223)
- 4. email (score: 0.0222)
+ 4. email (score: 0.0223)
  5. money (score: 0.0205)
  6. online (score: 0.0197)
  7. free (score: 0.0177)
@@ -53,18 +53,18 @@ TOP PHISHING-ASSOCIATED TERMS:
 15. site (score: 0.0148)
 
 ENHANCED CLASSIFICATION MODEL PERFORMANCE:
-- Overall Accuracy: 0.821
-- Phishing Detection Precision: 0.850
-- Phishing Detection Recall: 0.750
-- Phishing Detection F1-Score: 0.797
+- Overall Accuracy: 0.820
+- Phishing Detection Precision: 0.849
+- Phishing Detection Recall: 0.749
+- Phishing Detection F1-Score: 0.796
 
 TOP PREDICTIVE FEATURES:
-- exclamation_ratio: 0.291
+- exclamation_ratio: 0.292
 - type_token_ratio: 0.126
 - flesch_score: 0.095
 - punctuation_density: 0.086
 - financial_words: 0.079
-- sentiment_compound: 0.077
+- sentiment_compound: 0.076
 - word_count: 0.068
 - url_count: 0.046
 
