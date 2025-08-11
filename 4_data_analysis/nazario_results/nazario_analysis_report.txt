@@ -1,0 +1,88 @@
+ENHANCED PHISHING EMAIL ANALYSIS REPORT - NAZARIO DATASET
+================================================================================
+
+DATASET OVERVIEW:
+- Total emails analyzed: 3,048
+- Safe emails: 1,497
+- Phishing emails: 1,551
+- Phishing percentage: 50.89%
+
+KEY FINDINGS:
+--------------------
+Most distinguishing features (by effect size):
+- action_words: Phishing emails have higher values (effect size: 0.918)
+- sentiment_pos: Phishing emails have higher values (effect size: 0.624)
+- type_token_ratio: Phishing emails have lower values (effect size: -0.623)
+- sentiment_neu: Phishing emails have lower values (effect size: -0.547)
+- financial_words: Phishing emails have higher values (effect size: 0.483)
+- reward_words: Phishing emails have lower values (effect size: -0.395)
+- special_char_ratio: Phishing emails have lower values (effect size: -0.380)
+- sentiment_compound: Phishing emails have higher values (effect size: 0.267)
+- urgency_words: Phishing emails have higher values (effect size: 0.265)
+- avg_word_length: Phishing emails have higher values (effect size: 0.158)
+- fear_words: Phishing emails have higher values (effect size: 0.111)
+- sentence_count: Phishing emails have lower values (effect size: -0.080)
+
+PSYCHOLOGICAL MANIPULATION TACTICS:
+- Urgency Words: +0.16 average count in phishing emails
+- Action Words: +1.59 average count in phishing emails
+- Financial Words: +0.70 average count in phishing emails
+- Fear Words: +0.07 average count in phishing emails
+- Reward Words: +-0.35 average count in phishing emails
+
+PUNCTUATION USAGE PATTERNS:
+- Exclamation Ratio: less usage in phishing emails (0.0000 difference)
+- Question Ratio: less usage in phishing emails (0.0000 difference)
+- Punctuation Density: less usage in phishing emails (0.0000 difference)
+
+TOP PHISHING-ASSOCIATED TERMS:
+ 1. account (score: 0.1069)
+ 2. josemonkeyorg (score: 0.0611)
+ 3. email (score: 0.0574)
+ 4. click (score: 0.0377)
+ 5. dear (score: 0.0363)
+ 6. usaa (score: 0.0351)
+ 7. update (score: 0.0340)
+ 8. security (score: 0.0330)
+ 9. monkeyorg (score: 0.0328)
+10. verify (score: 0.0319)
+11. upgrade (score: 0.0272)
+12. mailbox (score: 0.0268)
+13. password (score: 0.0264)
+14. payment (score: 0.0233)
+15. email account (score: 0.0229)
+
+ENHANCED CLASSIFICATION MODEL PERFORMANCE:
+- Overall Accuracy: 0.885
+- Phishing Detection Precision: 0.914
+- Phishing Detection Recall: 0.855
+- Phishing Detection F1-Score: 0.883
+
+CONFUSION MATRIX BREAKDOWN:
+- True Negatives (Safe correctly identified): 275
+- False Positives (Safe misclassified as Phishing): 25
+- False Negatives (Phishing misclassified as Safe): 45
+- True Positives (Phishing correctly identified): 265
+- Specificity (True Negative Rate): 0.917
+
+TOP PREDICTIVE FEATURES:
+- type_token_ratio: 0.260
+- action_words: 0.181
+- word_count: 0.165
+- flesch_score: 0.128
+- financial_words: 0.124
+- sentiment_compound: 0.072
+- reward_words: 0.039
+- urgency_words: 0.022
+
+VISUALIZATION FILES CREATED:
+- 4_data_analysis/nazario_results/plots/01_dataset_overview.png
+- 4_data_analysis/nazario_results/plots/02_sentiment_analysis.png
+- 4_data_analysis/nazario_results/plots/03_psychological_radar.png
+- 4_data_analysis/nazario_results/plots/04_text_complexity.png
+- 4_data_analysis/nazario_results/plots/05_punctuation_analysis.png
+- 4_data_analysis/nazario_results/plots/06_tfidf_analysis.png
+- 4_data_analysis/nazario_results/plots/07_feature_importance.png
+- 4_data_analysis/nazario_results/plots/08_readability_analysis.png
+- 4_data_analysis/nazario_results/plots/09_url_email_patterns.png
+- 4_data_analysis/nazario_results/plots/10_confusion_matrix.png
