@@ -87,4 +87,3 @@ We will tailor delivery based on each persona's preferred medium.
 * **Reporting Rate:** A 30% increase in flagged emails submitted to IT.
 * **Open Rate:** A greater than 80% open rate for email bulletins.
 * **Quiz Completion:** More than 60% of employees complete monthly chatbot scenarios.
-
