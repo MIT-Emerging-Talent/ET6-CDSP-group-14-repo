@@ -22,7 +22,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from scipy.stats import ttest_ind
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from textstat import flesch_kincaid_grade, flesch_reading_ease, gunning_fog
 
@@ -47,6 +47,7 @@ except LookupError:
 # Ensure punkt is available for sentence tokenization
 try:
     from nltk.tokenize import sent_tokenize
+
     # Test if punkt is working
     sent_tokenize("This is a test.")
 except LookupError:
@@ -61,7 +62,7 @@ class PhishingAnalyzer:
         self.clean_df = None
         self.tfidf_vectorizer = None
         self.results = {}
-        
+
         # Create dataset-specific output directories
         self.output_dir = f"4_data_analysis/{dataset_name}_results"
         self.plots_dir = f"{self.output_dir}/plots"
@@ -87,13 +88,16 @@ class PhishingAnalyzer:
             * 100,
         }
         self.clean_df = self.df.copy()
-        
+
         # For datasets without 'body_clean' column, use 'body' column
-        if 'body_clean' not in self.clean_df.columns and 'body' in self.clean_df.columns:
-            self.clean_df['body_clean'] = self.clean_df['body']
-        
+        if (
+            "body_clean" not in self.clean_df.columns
+            and "body" in self.clean_df.columns
+        ):
+            self.clean_df["body_clean"] = self.clean_df["body"]
+
         # Fill missing values in body_clean with empty string
-        self.clean_df['body_clean'] = self.clean_df['body_clean'].fillna('')
+        self.clean_df["body_clean"] = self.clean_df["body_clean"].fillna("")
 
     def calculate_basic_features(self):
         """Calculate basic text features for each email"""
@@ -103,10 +107,10 @@ class PhishingAnalyzer:
             # Handle missing/NaN values
             if pd.isna(text) or text is None:
                 text = ""
-            
+
             # Ensure text is a string
             text = str(text)
-            
+
             words = word_tokenize(text.lower())
             sentences = sent_tokenize(text)
 
@@ -520,7 +524,9 @@ class PhishingAnalyzer:
         for autotext in autotexts:
             autotext.set_color("white")
             autotext.set_fontweight("bold")
-        plt.savefig(f"{self.plots_dir}/01_dataset_overview.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/01_dataset_overview.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
         # 2. Enhanced Sentiment Analysis
@@ -546,7 +552,7 @@ class PhishingAnalyzer:
 
         # 9. URL and Email Pattern Analysis
         self._create_url_email_plot()
-        
+
         # 10. Confusion Matrix (if model has been built)
         if "model_performance" in self.results:
             self._create_confusion_matrix_plot()
@@ -666,7 +672,9 @@ class PhishingAnalyzer:
         ax4.legend(title="Email Type", title_fontsize=11, fontsize=10)
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/02_sentiment_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/02_sentiment_analysis.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_radar_chart(self):
@@ -761,7 +769,9 @@ class PhishingAnalyzer:
         )
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/03_psychological_radar.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/03_psychological_radar.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_text_complexity_plot(self):
@@ -877,7 +887,9 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/04_text_complexity.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/04_text_complexity.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_punctuation_analysis(self):
@@ -939,7 +951,11 @@ class PhishingAnalyzer:
         ax4.set_yticklabels(["Safe", "Phishing"], rotation=0)
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/05_punctuation_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/05_punctuation_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_tfidf_plots(self):
@@ -1004,7 +1020,9 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/06_tfidf_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/06_tfidf_analysis.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_feature_importance_plot(self):
@@ -1046,7 +1064,9 @@ class PhishingAnalyzer:
             )
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/07_feature_importance.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/07_feature_importance.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_readability_plot(self):
@@ -1179,7 +1199,11 @@ class PhishingAnalyzer:
         )
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/08_readability_analysis.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/08_readability_analysis.png",
+            dpi=300,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def _create_url_email_plot(self):
@@ -1248,88 +1272,104 @@ class PhishingAnalyzer:
         ax4.set_xticklabels(["Safe", "Phishing"], rotation=0)
 
         plt.tight_layout()
-        plt.savefig(f"{self.plots_dir}/09_url_email_patterns.png", dpi=300, bbox_inches="tight")
+        plt.savefig(
+            f"{self.plots_dir}/09_url_email_patterns.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def _create_confusion_matrix_plot(self):
         """Create confusion matrix visualization"""
         if "model_performance" not in self.results:
             return
-            
+
         cm = self.results["model_performance"]["confusion_matrix"]
         accuracy = self.results["model_performance"]["accuracy"]
-        
+
         # Create figure with two subplots
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
-        
+
         # Plot 1: Raw confusion matrix
         sns.heatmap(
             cm,
             annot=True,
-            fmt='d',
-            cmap='Blues',
+            fmt="d",
+            cmap="Blues",
             ax=ax1,
             square=True,
-            cbar_kws={'shrink': 0.8},
-            xticklabels=['Safe', 'Phishing'],
-            yticklabels=['Safe', 'Phishing']
+            cbar_kws={"shrink": 0.8},
+            xticklabels=["Safe", "Phishing"],
+            yticklabels=["Safe", "Phishing"],
         )
-        ax1.set_xlabel('Predicted Label', fontweight='bold', fontsize=12)
-        ax1.set_ylabel('True Label', fontweight='bold', fontsize=12)
-        ax1.set_title(f'Confusion Matrix\n(Raw Counts)', fontweight='bold', fontsize=14)
-        
+        ax1.set_xlabel("Predicted Label", fontweight="bold", fontsize=12)
+        ax1.set_ylabel("True Label", fontweight="bold", fontsize=12)
+        ax1.set_title("Confusion Matrix\n(Raw Counts)", fontweight="bold", fontsize=14)
+
         # Add accuracy text
         ax1.text(
-            0.5, -0.15, 
-            f'Overall Accuracy: {accuracy:.3f}',
-            ha='center', va='top',
+            0.5,
+            -0.15,
+            f"Overall Accuracy: {accuracy:.3f}",
+            ha="center",
+            va="top",
             transform=ax1.transAxes,
-            fontsize=12, fontweight='bold',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue', alpha=0.7)
+            fontsize=12,
+            fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="lightblue", alpha=0.7),
         )
-        
+
         # Plot 2: Normalized confusion matrix (percentages)
-        cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
         sns.heatmap(
             cm_normalized,
             annot=True,
-            fmt='.3f',
-            cmap='Blues',
+            fmt=".3f",
+            cmap="Blues",
             ax=ax2,
             square=True,
-            cbar_kws={'shrink': 0.8},
-            xticklabels=['Safe', 'Phishing'],
-            yticklabels=['Safe', 'Phishing']
+            cbar_kws={"shrink": 0.8},
+            xticklabels=["Safe", "Phishing"],
+            yticklabels=["Safe", "Phishing"],
         )
-        ax2.set_xlabel('Predicted Label', fontweight='bold', fontsize=12)
-        ax2.set_ylabel('True Label', fontweight='bold', fontsize=12)
-        ax2.set_title(f'Confusion Matrix\n(Normalized)', fontweight='bold', fontsize=14)
-        
+        ax2.set_xlabel("Predicted Label", fontweight="bold", fontsize=12)
+        ax2.set_ylabel("True Label", fontweight="bold", fontsize=12)
+        ax2.set_title("Confusion Matrix\n(Normalized)", fontweight="bold", fontsize=14)
+
         # Calculate and display key metrics
         tn, fp, fn, tp = cm.ravel()
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0
-        f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
-        specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
-        
-        metrics_text = f'Precision: {precision:.3f}\nRecall: {recall:.3f}\nF1-Score: {f1:.3f}\nSpecificity: {specificity:.3f}'
-        ax2.text(
-            0.5, -0.15,
-            metrics_text,
-            ha='center', va='top',
-            transform=ax2.transAxes,
-            fontsize=11, fontweight='bold',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgreen', alpha=0.7)
+        f1 = (
+            2 * (precision * recall) / (precision + recall)
+            if (precision + recall) > 0
+            else 0
         )
-        
+        specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
+
+        metrics_text = f"Precision: {precision:.3f}\nRecall: {recall:.3f}\nF1-Score: {f1:.3f}\nSpecificity: {specificity:.3f}"
+        ax2.text(
+            0.5,
+            -0.15,
+            metrics_text,
+            ha="center",
+            va="top",
+            transform=ax2.transAxes,
+            fontsize=11,
+            fontweight="bold",
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="lightgreen", alpha=0.7),
+        )
+
         # Overall title
         fig.suptitle(
-            'Phishing Detection Model - Confusion Matrix Analysis',
-            fontsize=16, fontweight='bold', y=1.02
+            "Phishing Detection Model - Confusion Matrix Analysis",
+            fontsize=16,
+            fontweight="bold",
+            y=1.02,
         )
-        
+
         plt.tight_layout()
-        plt.savefig(f'{self.plots_dir}/10_confusion_matrix.png', dpi=300, bbox_inches='tight')
+        plt.savefig(
+            f"{self.plots_dir}/10_confusion_matrix.png", dpi=300, bbox_inches="tight"
+        )
         plt.close()
 
     def build_classification_model(self):
@@ -1370,7 +1410,7 @@ class PhishingAnalyzer:
 
         # Predictions
         y_pred = rf_model.predict(X_test)
-        
+
         # Calculate confusion matrix
         cm = confusion_matrix(y_test, y_pred)
         accuracy = accuracy_score(y_test, y_pred)
@@ -1386,13 +1426,13 @@ class PhishingAnalyzer:
             "confusion_matrix": cm,
             "accuracy": accuracy,
             "y_test": y_test,
-            "y_pred": y_pred
+            "y_pred": y_pred,
         }
 
         print("Classification Report:")
         print(classification_report(y_test, y_pred))
         print(f"\nAccuracy: {accuracy:.4f}")
-        print(f"Confusion Matrix:")
+        print("Confusion Matrix:")
         print(cm)
 
     def save_results(self):
@@ -1400,7 +1440,9 @@ class PhishingAnalyzer:
         print("Saving analysis results...")
 
         # Save cleaned dataset with all features
-        self.clean_df.to_csv(f"{self.output_dir}/{self.dataset_name}_analysis_dataset.csv", index=False)
+        self.clean_df.to_csv(
+            f"{self.output_dir}/{self.dataset_name}_analysis_dataset.csv", index=False
+        )
 
         # Save detailed comparison statistics
         comparison_df = pd.DataFrame(self.results["feature_comparison"]).T
@@ -1423,7 +1465,9 @@ class PhishingAnalyzer:
     def _generate_text_report(self):
         """Generate a comprehensive text report of findings"""
         report = []
-        report.append(f"ENHANCED PHISHING EMAIL ANALYSIS REPORT - {self.dataset_name.upper()} DATASET")
+        report.append(
+            f"ENHANCED PHISHING EMAIL ANALYSIS REPORT - {self.dataset_name.upper()} DATASET"
+        )
         report.append("=" * 80)
         report.append("")
 
@@ -1516,7 +1560,7 @@ class PhishingAnalyzer:
             model_stats = self.results["model_performance"]["classification_report"]
             cm = self.results["model_performance"]["confusion_matrix"]
             accuracy = self.results["model_performance"]["accuracy"]
-            
+
             report.append("ENHANCED CLASSIFICATION MODEL PERFORMANCE:")
             report.append(f"- Overall Accuracy: {accuracy:.3f}")
             report.append(
@@ -1529,7 +1573,7 @@ class PhishingAnalyzer:
                 f"- Phishing Detection F1-Score: {model_stats['1']['f1-score']:.3f}"
             )
             report.append("")
-            
+
             # Add confusion matrix details
             tn, fp, fn, tp = cm.ravel()
             report.append("CONFUSION MATRIX BREAKDOWN:")
@@ -1537,7 +1581,7 @@ class PhishingAnalyzer:
             report.append(f"- False Positives (Safe misclassified as Phishing): {fp}")
             report.append(f"- False Negatives (Phishing misclassified as Safe): {fn}")
             report.append(f"- True Positives (Phishing correctly identified): {tp}")
-            
+
             specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
             report.append(f"- Specificity (True Negative Rate): {specificity:.3f}")
             report.append("")
@@ -1565,7 +1609,9 @@ class PhishingAnalyzer:
         report.append(f"- {self.plots_dir}/10_confusion_matrix.png")
 
         # Save report
-        with open(f"{self.output_dir}/{self.dataset_name}_analysis_report.txt", "w") as f:
+        with open(
+            f"{self.output_dir}/{self.dataset_name}_analysis_report.txt", "w"
+        ) as f:
             f.write("\n".join(report))
 
     def run_complete_analysis(self):
@@ -1597,9 +1643,15 @@ class PhishingAnalyzer:
         self.save_results()
 
         print("=" * 70)
-        print(f"Enhanced analysis complete for {self.dataset_name.upper()} dataset! Check the generated files:")
-        print(f"- {self.dataset_name}_analysis_dataset.csv: Complete dataset with all features")
-        print(f"- {self.plots_dir}/: Directory containing 10 individual visualization files")
+        print(
+            f"Enhanced analysis complete for {self.dataset_name.upper()} dataset! Check the generated files:"
+        )
+        print(
+            f"- {self.dataset_name}_analysis_dataset.csv: Complete dataset with all features"
+        )
+        print(
+            f"- {self.plots_dir}/: Directory containing 10 individual visualization files"
+        )
         print(f"- {self.dataset_name}_analysis_report.txt: Comprehensive text report")
         print("- Various CSV files with detailed statistics")
         print("\nVisualization files are ready for slideshow presentation!")
@@ -1612,20 +1664,20 @@ if __name__ == "__main__":
     print("Analyzing robustness and generalizability across datasets")
     print("=" * 80)
     print()
-    
+
     # Run analysis on Enron dataset
     print("STARTING ANALYSIS ON ENRON DATASET")
     print("-" * 50)
     enron_analyzer = PhishingAnalyzer("1_datasets/Enron_cleaned.csv", "enron")
     enron_analyzer.run_complete_analysis()
-    
+
     print("\n" + "=" * 80)
     # Run analysis on Nazario dataset
     print("STARTING ANALYSIS NAZARIO DATASET")
     print("-" * 50)
     nazario_analyzer = PhishingAnalyzer("1_datasets/Nazario.csv", "nazario")
     nazario_analyzer.run_complete_analysis()
-    
+
     print("\n" + "=" * 80)
     print("MULTI-DATASET ANALYSIS COMPLETE!")
     print("=" * 80)

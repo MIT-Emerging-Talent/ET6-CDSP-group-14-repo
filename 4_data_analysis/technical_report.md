@@ -249,7 +249,9 @@ ______________________________________________________________________
 
 ## 7. Conclusion & Future Work
 
-We demonstrate that phishing emails exhibit distinctive linguistic and psychological signatures enabling **83.5% detection accuracy** with a Random Forest model. Key signals include sentiment patterns, punctuation usage, URLs, and vocabulary metrics. Cross-dataset validation confirms methodology robustness with **88.5% accuracy** on modern phishing attempts. Future directions involve incorporating header metadata, hybrid ensemble
+We demonstrate that phishing emails exhibit distinctive linguistic and psychological signatures enabling **82% detection accuracy** with a Random Forest model.
+Key signals include sentiment patterns, punctuation usage, URLs, and vocabulary metrics.
+Cross-dataset validation confirms methodology robustness with **88.5% accuracy** on modern phishing attempts. Future directions involve incorporating header metadata, hybrid ensemble
 models, transformer-based sequence analysis, and evaluation on contemporary, diverse datasets.
 
 ______________________________________________________________________
