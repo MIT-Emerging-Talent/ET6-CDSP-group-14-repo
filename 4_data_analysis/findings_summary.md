@@ -65,7 +65,7 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 - **Domain Specificity**: Corporate email context limits generalizability.
 - **Lexicon Bias**: VADER sentiment and static keyword lists may miss nuanced or emerging manipulation.
 - **Model Interpretability**: While the Random Forest achieved high accuracy, it is not highly interpretable compared to simpler models.
-- **No External Validation**: Model performance was evaluated only with 5-fold cross-validation on the Enron dataset; generalization to other datasets has not been tested.
+-**Recall Rate**: As phishing is very sensitive, a higher recall rate should be explored
 
 ---
 
@@ -74,11 +74,19 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 Using the report’s Cohen’s d scale, **negative sentiment** was the only feature in the large category, with several medium and small effects observed. While many individual features are not strong enough to detect phishing alone, **in combination they form a powerful detection tool** — as demonstrated by the Random Forest model’s 83.5% accuracy in
 phishing email detection.
 
-However, since the model was only evaluated with 5-fold cross-validation on the Enron dataset, the next step should include **external validation** on more recent and diverse datasets to confirm generalizability and ensure robustness against evolving phishing tactics.
-
 ---
+
+## External Validation
+
+External Validation is included under Data Analysis folder using  Nazario Datasets
+
+CONFUSION MATRIX BREAKDOWN:
+
+|                     | Predicted Phishing   | Predicted Safe |
+|---------------------|----------------------|----------------|
+| **Actual Phishing** | **TP = 265**         | **FN = 45**    |
+| **Actual Safe**     | **FP = 25**          | **TN = 275**   |
 
 ## Next Steps
 
-- Perform **external validation** using datasets from different domains and recent time periods to assess real-world applicability.
-- Compare the Random Forest’s performance with more interpretable models to balance accuracy and explainability.
+Evaluate ways to increase sensitivity/True Positive Rate
