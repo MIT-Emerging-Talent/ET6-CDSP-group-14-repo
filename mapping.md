@@ -12,14 +12,14 @@
     - README.md
     - retrospective.md
   - **1_datasets/**
-    - Enron.csv
-    - Enron_cleaned.csv
+    - Enron.csv (includes raw dataset)
+    - Enron_cleaned.csv (dataset after running data_cleaning.py)
     - guide.md
-    - phishing_analysis_dataset.csv
+    - phishing_analysis_dataset.csv (#dataset after running data_analysis.py )
     - README.md
     - retrospective.md
   - **2_data_preparation/**
-    - data_cleaning.py
+    - data_cleaning.py (cleaning script : result is saved under Enron_cleaned)
     - guide.md
     - README.md
     - retrospective.md
@@ -28,6 +28,8 @@
     - README.md
     - retrospective.md
   - **4_data_analysis/**
+  Dataset is analyzed (main analysis script and interpetations on phishing_analysis.py), resulting plots and feature_comparision stats as well csv files such as top_safe_terms and top_phishing_terms. Further interpretation include confidence_interval.py and results saved feature_confidence_intervals.csv. Validation tested on Nazario dataset; Nazario_results folder saved. Technical and non technical reporting and findings_summary summarize the analysis and findings.
+
     - confidence_interval.py
     - enhanced_phishing_analysis_report.txt
     - feature_comparison_stats.csv
