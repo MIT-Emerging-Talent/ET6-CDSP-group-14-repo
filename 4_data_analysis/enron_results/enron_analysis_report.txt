@@ -1,0 +1,88 @@
+ENHANCED PHISHING EMAIL ANALYSIS REPORT - ENRON DATASET
+================================================================================
+
+DATASET OVERVIEW:
+- Total emails analyzed: 29,710
+- Safe emails: 15,761
+- Phishing emails: 13,949
+- Phishing percentage: 46.95%
+
+KEY FINDINGS:
+--------------------
+Most distinguishing features (by effect size):
+- sentiment_neg: Phishing emails have higher values (effect size: 0.503)
+- sentiment_neu: Phishing emails have lower values (effect size: -0.489)
+- type_token_ratio: Phishing emails have higher values (effect size: 0.372)
+- exclamation_ratio: Phishing emails have higher values (effect size: 0.365)
+- avg_word_length: Phishing emails have higher values (effect size: 0.340)
+- financial_words: Phishing emails have higher values (effect size: 0.316)
+- reward_words: Phishing emails have higher values (effect size: 0.305)
+- email_pattern_count: Phishing emails have lower values (effect size: -0.255)
+- sentiment_pos: Phishing emails have higher values (effect size: 0.229)
+- urgency_words: Phishing emails have higher values (effect size: 0.202)
+- action_words: Phishing emails have higher values (effect size: 0.197)
+- url_count: Phishing emails have higher values (effect size: 0.170)
+
+PSYCHOLOGICAL MANIPULATION TACTICS:
+- Urgency Words: +0.12 average count in phishing emails
+- Action Words: +0.22 average count in phishing emails
+- Financial Words: +0.57 average count in phishing emails
+- Fear Words: +-0.01 average count in phishing emails
+- Reward Words: +0.36 average count in phishing emails
+
+PUNCTUATION USAGE PATTERNS:
+- Exclamation Ratio: more usage in phishing emails (0.0019 difference)
+- Question Ratio: more usage in phishing emails (0.0017 difference)
+- Punctuation Density: more usage in phishing emails (0.0008 difference)
+
+TOP PHISHING-ASSOCIATED TERMS:
+ 1. www (score: 0.0286)
+ 2. click (score: 0.0245)
+ 3. save (score: 0.0223)
+ 4. email (score: 0.0223)
+ 5. money (score: 0.0205)
+ 6. online (score: 0.0197)
+ 7. free (score: 0.0177)
+ 8. info (score: 0.0174)
+ 9. stop (score: 0.0163)
+10. software (score: 0.0155)
+11. viagra (score: 0.0154)
+12. life (score: 0.0151)
+13. company (score: 0.0150)
+14. adobe (score: 0.0148)
+15. site (score: 0.0148)
+
+ENHANCED CLASSIFICATION MODEL PERFORMANCE:
+- Overall Accuracy: 0.820
+- Phishing Detection Precision: 0.851
+- Phishing Detection Recall: 0.748
+- Phishing Detection F1-Score: 0.796
+
+CONFUSION MATRIX BREAKDOWN:
+- True Negatives (Safe correctly identified): 2788
+- False Positives (Safe misclassified as Phishing): 364
+- False Negatives (Phishing misclassified as Safe): 704
+- True Positives (Phishing correctly identified): 2086
+- Specificity (True Negative Rate): 0.885
+
+TOP PREDICTIVE FEATURES:
+- exclamation_ratio: 0.280
+- type_token_ratio: 0.136
+- punctuation_density: 0.106
+- sentiment_compound: 0.084
+- financial_words: 0.082
+- flesch_score: 0.064
+- word_count: 0.064
+- question_ratio: 0.047
+
+VISUALIZATION FILES CREATED:
+- 4_data_analysis/enron_results/plots/01_dataset_overview.png
+- 4_data_analysis/enron_results/plots/02_sentiment_analysis.png
+- 4_data_analysis/enron_results/plots/03_psychological_radar.png
+- 4_data_analysis/enron_results/plots/04_text_complexity.png
+- 4_data_analysis/enron_results/plots/05_punctuation_analysis.png
+- 4_data_analysis/enron_results/plots/06_tfidf_analysis.png
+- 4_data_analysis/enron_results/plots/07_feature_importance.png
+- 4_data_analysis/enron_results/plots/08_readability_analysis.png
+- 4_data_analysis/enron_results/plots/09_url_email_patterns.png
+- 4_data_analysis/enron_results/plots/10_confusion_matrix.png
