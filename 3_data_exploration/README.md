@@ -57,4 +57,4 @@ Other important things we will be looking at in order to better understand our d
 ![Frequent Words](../plots/02_sentiment_analysis.png)
 
 And the existence of URL is another aspect we aim to analyze in phishing vs non phishing emails
-![URL_Existence](../plots/url_proportion.png)
+![URL_Existence](../plots/url_email_patterns.png)
