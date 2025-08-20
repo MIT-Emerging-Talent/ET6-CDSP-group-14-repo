@@ -48,7 +48,7 @@ Future explorations in this folder should focus on:
 
 **Note**: Current explorations are integrated into the main analysis pipeline in `/4_data_analysis`. This folder is prepared for future exploration work or alternative analysis approaches.
 
-Our datset contains 1551 phishing and 1497 safe emails.Below we visually summarize the total class phishing and safe emails
+Our datset contains 15761 phishing and 13949 safe emails.Below we visually summarize the total class phishing and safe emails
 
 ![Class Distribution](../plots/01_dataset_overview.png)
 
