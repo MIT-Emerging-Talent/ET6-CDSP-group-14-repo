@@ -40,16 +40,16 @@ This folder contains all key datasets used across our project — from input dat
 
 ### 📂 Nazario.csv
 
-**Description** Used for checking if the findings from the Enron dataset holds true
-**Size** 3048 emails
+**Description**: Used for checking if the findings from the Enron dataset holds true  
+**Size**: 3048 emails
 
 ---
 
 ## Summary Table
 
-| File Name                    | Description                           | Used In                         | Status           |
-|---------------------------- -|---------------------------------------|---------------------------------|------------------|
-| Enron.csv                    | Input dataset (structured, labeled)   | `2_data_preparation/`           | ✅ Initial Input |
-| Enron_cleaned.csv            | Cleaned version with `body_clean`     | `3_data_exploration/`           | ⚠️Transitional   |
-| phishing_analysis_dataset.csv| Final dataset with all features       | `4_data_analysis/`, all plots   | ✅Final version  |
-| Nazario.csv                   |For checking if findings hold true    |`4_data_analysis/`               |                   |
+| File Name                     | Description                               | Used In               | Status          |
+|-------------------------------|-------------------------------------------|-----------------------|-----------------|
+| Enron.csv                     | Input dataset (structured, labeled)       | `2_data_preparation/` | ✅ Initial Input |
+| Enron_cleaned.csv             | Cleaned version with `body_clean`         | `3_data_exploration/` | ⚠️ Transitional  |
+| phishing_analysis_dataset.csv | Final dataset with all features           | `4_data_analysis/`, all plots | ✅ Final version |
+| Nazario.csv                   | For checking if findings hold true        | `4_data_analysis/`    |                 |
