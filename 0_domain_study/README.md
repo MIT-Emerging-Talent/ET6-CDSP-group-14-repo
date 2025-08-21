@@ -2,6 +2,10 @@
 
 Welcome to the `0_domain_study` folder! This section summarizes our team's research into phishing — specifically the linguistic features that affect user click-through behavior. Below you'll find a structured overview of our research domain, background, and actionable insights.
 
+Our revised topic studies the different lingustic features in phishing and non-phishing emails. Phishing remain a top cyber security trait.
+Examining the various lingustic features helps understand attacker strategies in human- readable terms and ultimately prevent phishing attacks.
+While researches have been done in this topic , many focus on only subject or body only, we aim to combine both for better understanding. Our paper also aims to balance accuracy in Machine Learning with interpretability.
+
 ---
 
 ## 📌 Problem Statement (Based on Team's Personal Experiences)
