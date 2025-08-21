@@ -1,8 +1,18 @@
 # Data Analysis
 
+Our analysis aimed at comparing various lingustic features to see if there is a difference in lingustics of phishing and non-phishing emails.
+
+We further asked:
+
+- What specific linguistic features show measurable differences between phishing and legitimate emails?
+- Are these differences statistically significant and meaningful?
+- Can a machine learning model trained on these features accurately classify emails as phishing or legitimate?
+
+To answer theses we took 4 main steps in our data analysis: feature extraction and machine learning including visualizations on enron dataset, interpretation (statistical significance- cohen's d, p-values), validating findings on external dataset(Nazario) and detailed reports(technical and non_technical as well as findings_summary)
+
 ## Overview
 
-This folder contains the main analysis scripts, notebooks, and results for our phishing email detection research. The analysis examines linguistic patterns and psychological manipulation tactics that distinguish phishing emails from legitimate communications.
+This folder contains the main analysis scripts and results for our phishing email detection research. The analysis examines linguistic patterns and psychological manipulation tactics that distinguish phishing emails from legitimate communications.
 
 ## Analysis Strategy
 
@@ -14,6 +24,8 @@ Our analysis approach combines statistical analysis with machine learning to und
 4. **Visualization**: Create comprehensive plots to illustrate findings
 
 ## Files and Components
+
+The below files can be found in the data analysis folder under enron_results
 
 ### Main Analysis Script
 
@@ -40,6 +52,10 @@ Our analysis approach combines statistical analysis with machine learning to und
 - Practical implications and real-world examples
 - Visual aids and clear explanations
 
+### finding_summary.md
+
+- Summarizes Key findings
+
 ### Results and Outputs
 
 #### plots/ folder contents
@@ -60,6 +76,10 @@ Our analysis approach combines statistical analysis with machine learning to und
 - `feature_comparison_stats.csv` - Statistical comparison of all features
 - `top_phishing_terms.csv` - Most characteristic phishing words
 - `top_safe_terms.csv` - Most characteristic legitimate email words
+
+#### External Validation
+
+- Validated on Nazario dataset (Nazario.csv) with key results saved under data_analysis/nazario_results
 
 ### Dependencies
 
@@ -103,7 +123,7 @@ We have **high confidence** in these results based on:
 
 ## Usage
 
-1. Ensure data preparation is complete (`/2_data_preparation/data_cleaning.ipynb`)
+1. Ensure data preparation is complete (`/2_data_preparation/data_cleaning.py`)
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the main analysis: `python phishing_analysis.py`
 4. Review results in the generated plots and CSV files

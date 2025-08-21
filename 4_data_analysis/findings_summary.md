@@ -22,7 +22,7 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 
 ## What We Analyzed
 
-- **Dataset**: 29,711 Enron emails (53.05% safe, 46.95% phishing)
+- **Dataset**: 29,710 Enron emails (53.05% safe, 46.95% phishing)
 - **Features**: 22 linguistic, readability, psychological, and structural variables.
 - **Statistical Test**: Welch’s t-test for p-values; Cohen’s d for effect size using the report’s scale:
   - 🟥 **Large**: |d| ≥ 0.50  
@@ -45,17 +45,17 @@ Phishing emails exhibit distinct linguistic features—such as tone, structure, 
 
 ## Model Performance — Confusion Matrix
 
-|                 | Predicted Phishing 🟥 | Predicted Safe  🟩 |
-|-----------------|----------------------|------------------    |
-| **Actual Phishing 🟥** | **TP = 10,752** | **FN = 3,197**    |
-| **Actual Safe 🟩**     | **FP = 2,493**  | **TN = 13,268**   |
+|                  | Predicted Phishing   | Predicted Safe|
+|------------------|----------------------|---------------|
+| **Actual Phishing| **TP = 2086** | **FN = 704**         |
+| **Actual Safe    | **FP = 364**  | **TN = 2788**        |
 
 **Metrics:**
 
-- **Accuracy**: 83.5% — overall correctness.
-- **Precision (Phishing)**: 86.4% — of predicted phishing emails, % actually phishing.
-- **Recall (Phishing)**: 77.1% — of actual phishing emails, % correctly found.
-- **F1-score**: 81.5% — balance between precision and recall.
+- **Accuracy**: 82% — overall correctness.
+- **Precision (Phishing)**: 85.1% — of predicted phishing emails, % actually phishing.
+- **Recall (Phishing)**: 74.8% — of actual phishing emails, % correctly found.
+- **F1-score**: 79.6% — balance between precision and recall.
 
 ---
 
@@ -86,6 +86,12 @@ CONFUSION MATRIX BREAKDOWN:
 |---------------------|----------------------|----------------|
 | **Actual Phishing** | **TP = 265**         | **FN = 45**    |
 | **Actual Safe**     | **FP = 25**          | **TN = 275**   |
+
+- **Accuracy**: 88.5% — overall correctness.  
+- **Precision (Phishing)**: 91.4% — of predicted phishing emails, % actually phishing.  
+- **Recall (Phishing)**: 85.5% — of actual phishing emails, % correctly found.  
+- **F1-score**: 88.3% — balance between precision and recall.  
+- **Specificity**: 91.7% — of actual safe emails, % correctly identified.  
 
 ## Next Steps
 
