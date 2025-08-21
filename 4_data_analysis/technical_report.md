@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-Phishing emails remain a critical cybersecurity threat, leveraging social engineering to deceive recipients into compromising actions. We conducted an in-depth analysis of 29,711 emails from the Enron corpus — 15,762 safe (53.05%) and 13,949 phishing (46.95%) — to identify textual fingerprints and build an
+Phishing emails remain a critical cybersecurity threat, leveraging social engineering to deceive recipients into compromising actions. We conducted an in-depth analysis of 29,710 emails from the Enron corpus — 15,761 safe (53.05%) and 13,949 phishing (46.95%) — to identify textual fingerprints and build an
 automated detection model. This report details our methodology, exploratory findings (with figures), statistical significance assessments, and a
 Random Forest classification performance.
 

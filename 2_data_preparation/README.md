@@ -2,13 +2,13 @@
 
 ## Overview
 
-This folder contains scripts and notebooks for cleaning, transforming, and preparing our phishing email dataset for analysis. All scripts read data from `/1_datasets` and output cleaned/processed data back to the same folder.
+This folder contains scripts and notebooks for cleaning and preparing the phishing email dataset for analysis. All scripts read data from `/1_datasets` and output cleaned data back to the same folder.
 
 ## Scripts and Notebooks
 
-### data_cleaning.ipynb
+### data_cleaning.py
 
-**Purpose**: Comprehensive data cleaning and feature extraction pipeline for the Enron phishing email dataset.
+**Purpose**: Data loading, cleaning, and preprocessing pipeline for the Enron phishing email dataset.
 
 **Input**:
 
@@ -16,47 +16,46 @@ This folder contains scripts and notebooks for cleaning, transforming, and prepa
 
 **Processing Steps**:
 
-1. **Text Cleaning**: Removes Enron-specific artifacts, email headers, corporate signatures, and stop words
-2. **Feature Extraction**: Applies NLP techniques for:
-   - Sentiment analysis (VADER sentiment scores)
-   - Linguistic features (type-token ratio, word lengths, sentence complexity)
-   - Psychological markers (urgency words, financial terms, manipulation tactics)
-   - Readability metrics (Flesch scores, Gunning Fog index)
-   - Structural patterns (punctuation analysis, URL detection)
+1. **Initial Exploration**: Loads dataset, prints shape, columns, label distribution, and missing values.
+2. **Filtering**: Removes emails with missing or empty bodies.
+3. **Text Cleaning**:
+   - Removes Enron-specific headers, footers, signatures, and forwarded-message artifacts.
+   - Strips company names and identifiers (e.g., `enron`, `ect`, `hou`).
+   - Removes email addresses, numbers, dates, and boilerplate phrases.
+   - Normalizes whitespace and characters for consistent formatting.
+4. **Length Filtering**: Drops very short or trivial messages (less than 10 characters).
+5. **Output Validation**: Prints stats on remaining vs. removed emails, dataset shape, and preview of cleaned text.
 
 **Output**:
 
-- Cleaned and feature-enriched dataset with **26** linguistic and psychological features
-- Saved as `Enron_cleaned.csv` in `/1_datasets`
-- Ready for statistical analysis and machine learning modeling
+- Cleaned dataset saved as `Enron_cleaned.csv` in `/1_datasets`
+- Includes a new column `body_clean` with processed text
 
 **Dependencies**: See `../4_data_analysis/requirements.txt` for required Python packages
 
 ## Data Preparation Strategy
 
-Our research focuses on identifying linguistic differences between phishing emails and legitimate ones by studying how language is used in both. Phishing emails often use certain writing tactics to trick or pressure readers, and we aim to uncover those patterns.
+Our research focuses on identifying linguistic differences between phishing emails and legitimate ones by studying how language is used in both. Cleaning the raw text is a necessary first step before extracting features and running analysis.
 
-### Text Processing Approach
+### Cleaning Approach
 
-We convert text into measurable patterns using several techniques:
+We prepare the text for further analysis by:
 
-- **Word Frequency Analysis**: Identify phrases that appear more often in phishing emails than in legitimate ones
-- **Sentiment Analysis**: Measure emotional content and manipulation tactics
-- **Linguistic Complexity**: Analyze vocabulary diversity, sentence structure, and readability
-- **Psychological Markers**: Detect urgency, financial pressure, and reward promises
+- **Removing noise**: Corporate artifacts, forwarded lines, and technical markers
+- **Normalizing text**: Lowercasing, stripping numbers, and standardizing whitespace
+- **Filtering**: Dropping incomplete or trivial messages
 
 ### Quality Control
 
-- **Deduplication**: Remove repeated emails by comparing content
-- **Missing Data Handling**: Process emails with missing subject or body values
-- **Text Normalization**: Convert to consistent format for analysis
-- **Feature Validation**: Ensure extracted features are meaningful and consistent
+- **Deduplication/Filtering**: Remove unusable or empty entries
+- **Missing Data Handling**: Exclude rows with missing body text
+- **Export Validation**: Save and check that the cleaned dataset has expected size and columns
 
 ## Usage
 
-To run the data cleaning pipeline:
+To run the cleaning pipeline:
 
 1. Ensure the raw dataset is in `/1_datasets/Enron.csv`
 2. Open `data_cleaning.py`
-3. Run all cells to process the data and extract features
+3. Run the script
 4. The cleaned dataset will be saved as `Enron_cleaned.csv` in `/1_datasets`
