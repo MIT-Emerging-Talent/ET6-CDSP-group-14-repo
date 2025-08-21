@@ -40,7 +40,7 @@ This folder contains all key datasets used across our project — from input dat
 
 ### 📂 Nazario.csv
 
-**Description**: Used for checking if the findings from the Enron dataset holds true
+**Description**: Used for checking if the findings from the Enron dataset holds true  
 **Size**: 3048 emails
 
 ---
