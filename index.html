@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pandas Pact - Phishing Awareness Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #222;
+      background: #f9fafb;
+    }
+
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 6px 12px;
+      transition: 0.3s;
+    }
+
+    nav button:hover {
+      color: #14b8a6;
+    }
+
+    nav button.active {
+      border-bottom: 3px solid #14b8a6;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a, #14b8a6);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section.page {
+      display: none;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    section.page.active {
+      display: block;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      margin-top: 0;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 18px;
+      background: #14b8a6;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-link:hover {
+      background: #0d9488;
+    }
+
+    .quiz-card {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background: #fafafa;
+    }
+
+    .quiz-card pre {
+      background: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    .answer {
+      margin-top: 10px;
+    }
+
+    .explanation {
+      margin-top: 10px;
+      display: none;
+      padding: 10px;
+      border-left: 4px solid #14b8a6;
+      background: #eef;
+    }
+
+    .result {
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin: 40px 0;
+      color: #555;
+    }
+
+    ul.team-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.team-list li {
+      margin: 6px 0;
+    }
+
+    .logo-about {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .logo-about img {
+      height: 80px;
+      width: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h2 style="margin:0; text-align:center;">Phishing Awareness Project</h2>
+    <nav>
+      <button onclick="showPage('about')" class="active">About Us</button>
+      <button onclick="showPage('quiz')">Quiz</button>
+      <button onclick="showPage('education')">Education</button>
+      <button onclick="showPage('findings')">Research Findings</button>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Recognize and Stop Phishing</h1>
+    <p>Empowering people and businesses to detect and prevent phishing</p>
+  </div>
+
+  <main>
+    <!-- About Us -->
+    <section id="about" class="page active">
+      <h2>About Us</h2>
+      <p>We are a global team of passionate students from MIT’s Emerging Talent program, brought together by curiosity
+        and a challenge. What began as a class project quickly grew into something more: a shared mission to make
+        cybersecurity knowledge accessible to everyone.</p>
+      <p>Our vision is simple: empower people to recognize and stop phishing attacks before they succeed. We believe
+        learning doesn’t have to be technical or complicated; it can be practical, engaging, and even fun.</p>
+      <p>Beyond individuals, we are committed to helping small and medium enterprises with 25-50 employees protect
+        themselves with affordable, high-quality training programs. Together, we’re building not just research, but a
+        knowledge base that anyone, anywhere, can use.</p>
+      <h3>Our Team</h3>
+      <ul class="team-list">
+        <li>Ahmad Hamed Dehzad</li>
+        <li>Mahida Ahmadi</li>
+        <li>Meklit Gebregiorgis</li>
+        <li>Musab Kaymak</li>
+        <li>Semira Tesfai</li>
+      </ul>
+      <!-- Logo after Team -->
+      <div class="logo-about">
+        <img src="transparent_logo.png" alt="Pandas Pact Logo" />
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz" class="page">
+      <h2>Phishing Quiz</h2>
+      <p><em>Instructions: Read each email carefully. Decide if it is Phishing or Non-Phishing. After selecting, click
+          “Check Answer” to see if you were correct. Explanations will always be shown. At the end, click “Submit Quiz”
+          to see your final grade.</em></p>
+      <div id="quiz-container"></div>
+      <button onclick="submitQuiz()">Submit Quiz</button>
+      <div id="quiz-score" style="margin-top:16px; font-weight:bold;"></div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="page">
+      <h2>Education</h2>
+      <p>Free Educational Coming Soon...</p>
+    </section>
+
+    <!-- Research Findings -->
+    <section id="findings" class="page">
+      <h2>Research Findings</h2>
+      <p>This study analyzed linguistic and structural patterns of phishing emails versus legitimate ones. Using a
+        dataset of 29,710 Enron emails, we tested 22 linguistic, readability, and psychological features with
+        statistical methods and a Random Forest model.</p>
+      <p>Results showed negative sentiment and certain structural cues are strong indicators of phishing, with combined
+        features achieving over 82% accuracy. External validation with Nazario data confirmed robustness at 88.5%
+        accuracy.</p>
+      <a class="btn-link" href="https://github.com/MIT-Emerging-Talent/ET6-CDSP-group-14-repo" target="_blank">See Full
+        Research</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Pandas Pact - Phishing Awareness Project
+  </footer>
+
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const navButtons = document.querySelectorAll('nav button');
+    function showPage(id) {
+      pages.forEach(p => p.classList.remove('active'));
+      navButtons.forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`nav button[onclick="showPage('${id}')"]`).classList.add('active');
+    }
+
+    // Quiz Questions
+    const quizQuestions = [
+      { from: "support@secure-login-update.com", to: "you@company.com", subject: "Urgent: Update your account", body: "Your account will be suspended unless you update immediately.\nClick here: http://secure-login-update.com", correct: "Phishing", explanation: "Uses urgency and suspicious URL not matching real provider." },
+      { from: "billing@paypal.com", to: "you@company.com", subject: "Payment Received", body: "We have processed your payment. Check receipt: http://paypal.secure-payments.ru", correct: "Phishing", explanation: "Fake PayPal domain (.ru)." },
+      { from: "manager@company.com", to: "you@company.com", subject: "Meeting at 3pm", body: "Reminder about our 3pm meeting in Room B.", correct: "Non-Phishing", explanation: "Normal workplace message." },
+      { from: "prizes@freegift.com", to: "you@company.com", subject: "Congratulations, You Won!", body: "Claim your $500 prize now: http://freegift.com/winner", correct: "Phishing", explanation: "Reward lure and suspicious link." },
+      { from: "alerts@bmo.com", to: "you@company.com", subject: "Account Alert", body: "Unusual login attempts. Confirm: http://bmo-login-secure.co", correct: "Phishing", explanation: "Fake domain similar to BMO." },
+      { from: "hr@company.com", to: "you@company.com", subject: "Team Lunch", body: "Reminder: team lunch this Friday, bring your badge.", correct: "Non-Phishing", explanation: "Normal office reminder." },
+      { from: "noreply@microsoft.com", to: "you@company.com", subject: "Password Reset", body: "Reset password here: http://microsoft.support-login.net", correct: "Phishing", explanation: "Altered Microsoft domain." },
+      { from: "accounts@vendor.com", to: "you@company.com", subject: "Invoice Attached", body: "Invoice for March attached. Please review.", correct: "Non-Phishing", explanation: "Standard invoice message." },
+      { from: "hr@company.com", to: "you@company.com", subject: "Re: Vacation Schedule", body: "Attached is the vacation schedule, please confirm receipt.", correct: "Non-Phishing", explanation: "Common workplace email." },
+      { from: "alerts@facebook.com", to: "you@company.com", subject: "Security Notice", body: "Unusual login detected. Verify at: http://faceb00k-security.com", correct: "Phishing", explanation: "Character swap (00 instead of oo)." }
+    ];
+
+    const container = document.getElementById('quiz-container');
+    quizQuestions.forEach((q, i) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.innerHTML = `
+    <pre>From: ${q.from}
+To: ${q.to}
+Subject: ${q.subject}
+
+${q.body}</pre>
+    <div class="answer">
+      <label><input type="radio" name="q${i}" value="Phishing"> Phishing</label><br>
+      <label><input type="radio" name="q${i}" value="Non-Phishing"> Non-Phishing</label>
+      <button onclick="checkAnswer(${i})">Check Answer</button>
+    </div>
+    <div class="result" id="res${i}"></div>
+    <div class="explanation" id="exp${i}">${q.explanation}</div>
+  `;
+      container.appendChild(card);
+    });
+
+    function checkAnswer(i) {
+      const sel = document.querySelector(`input[name="q${i}"]:checked`);
+      const res = document.getElementById(`res${i}`);
+      const exp = document.getElementById(`exp${i}`);
+      if (!sel) { res.innerText = "No answer selected."; exp.style.display = 'block'; return; }
+      if (sel.value === quizQuestions[i].correct) {
+        res.innerText = "✅ Correct";
+      } else {
+        res.innerText = "❌ Wrong";
+      }
+      exp.style.display = 'block';
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      quizQuestions.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if (sel && sel.value === q.correct) { score++; }
+      });
+      document.getElementById('quiz-score').innerText = `Final Grade: ${score}/${quizQuestions.length}`;
+    }
+  </script>
+</body>
+
+</html>

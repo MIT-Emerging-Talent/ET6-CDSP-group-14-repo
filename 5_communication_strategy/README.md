@@ -87,3 +87,7 @@ We will tailor delivery based on each persona's preferred medium.
 * **Reporting Rate:** A 30% increase in flagged emails submitted to IT.
 * **Open Rate:** A greater than 80% open rate for email bulletins.
 * **Quiz Completion:** More than 60% of employees complete monthly chatbot scenarios.
+
+As part of our deliverable we have also added a website with embedded quiz and developed a communication guideline
+👉 [Visit our Website](https://mit-emerging-talent.github.io/ET6-CDSP-group-14-repo/)  
+📄 [Download Communication Guideline (PDF)](/5_communication_strategy/Smart%20Project-CDSP%20Pandas_Pact_Communication_Guideline.pdf)
