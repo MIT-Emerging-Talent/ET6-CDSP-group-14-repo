@@ -90,5 +90,5 @@ We will tailor delivery based on each persona's preferred medium.
 
 As part of our deliverable we have also added a website with an embedded and interactive quiz and developed a communication guideline
 👉 [Visit our Website](https://mit-emerging-talent.github.io/ET6-CDSP-group-14-repo/)  
-💻 [check our interactive quiz](https://gemini.google.com/share/fff177210fea) 
+💻 [check our interactive quiz](https://gemini.google.com/share/fff177210fea)  
 📄 [Download Communication Guideline (PDF)](/5_communication_strategy/Smart%20Project-CDSP%20Pandas_Pact_Communication_Guideline.pdf)
